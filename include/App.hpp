@@ -25,7 +25,7 @@ private:
 private:
     State m_CurrentState = State::START;
 
-
+    std::vector<std::vector<int>> m_Map;
 };
 
 #endif
