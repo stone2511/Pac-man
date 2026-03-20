@@ -2,6 +2,7 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
+#include "Map.hpp"
 
 class App {
 public:
@@ -25,7 +26,7 @@ private:
 private:
     State m_CurrentState = State::START;
 
-    std::vector<std::vector<int>> m_Map;
+    Map m_Map;
 };
 
 #endif
