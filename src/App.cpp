@@ -7,9 +7,10 @@
 
 void App::Start() {
     LOG_TRACE("Start");
-    m_CurrentState = State::UPDATE;
 
     m_Position = {336.0f, 432.0f};
+
+    m_CurrentState = State::UPDATE;
 }
 
 void App::Update() {
@@ -29,12 +30,14 @@ void App::Update() {
         m_Position.x += speed; 
     }
     
+    /*
     ImGui::GetBackgroundDrawList()->AddCircleFilled(
         ImVec2(m_Position.x, m_Position.y), 
         20.0f, 
         IM_COL32(255, 255, 0, 255) // 黃色 (Red=255, Green=255, Blue=0, Alpha=255)
     );
-    
+    */
+
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.
