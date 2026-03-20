@@ -2,7 +2,7 @@
 #define MAP_HPP
 
 #include "pch.hpp"
-#include "Util/Image.hpp"
+#include "Util/GameObject.hpp"
 #include <vector>
 #include <memory>
 
@@ -13,10 +13,9 @@ public:
     void Draw();
 
 private:
-    std::vector<std::vector<int>> m_Grid; 
-    
-    //std::shared_ptr<Util::Image> m_WallImage;
-    //std::shared_ptr<Util::Image> m_CoinImage;
+    std::vector<std::vector<int>> m_Level;
+    //Image of the wall
+    std::vector<std::shared_ptr<Util::GameObject>> m_Blocks;
 };
 
 #endif

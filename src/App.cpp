@@ -1,5 +1,5 @@
 #include "App.hpp"
-
+#include "Core/Context.hpp"
 #include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
@@ -8,14 +8,19 @@
 void App::Start() {
     LOG_TRACE("Start");
 
+    //Init Map
     m_Map.Start();
+    //Init Pacman
+    m_Pacman.Start();
 
     m_CurrentState = State::UPDATE;
 }
 
 void App::Update() {
 
+    m_Pacman.Update();
     m_Map.Draw();
+    m_Pacman.Draw();
 
     /*
      * Do not touch the code below as they serve the purpose for
