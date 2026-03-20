@@ -25,8 +25,7 @@ private:
 private:
     State m_CurrentState = State::START;
 
-    //the coordinate of pac-man
-    glm::vec2 m_Position;
+
 };
 
 #endif
