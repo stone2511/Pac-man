@@ -2,6 +2,9 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
+#include "Util/GameObject.hpp"
+#include "Map.hpp"
+#include "Pacman.hpp"
 
 class App {
 public:
@@ -24,6 +27,9 @@ private:
 
 private:
     State m_CurrentState = State::START;
+
+    Map m_Map;
+    Pacman m_Pacman;
 };
 
 #endif
