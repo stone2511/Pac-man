@@ -10,6 +10,7 @@ void App::Start() {
 
     //Init Map
     m_Map.Start();
+
     //Init Pacman
     m_Pacman.Start();
 
@@ -18,9 +19,13 @@ void App::Start() {
 
 void App::Update() {
 
-    m_Pacman.Update(m_Map);
+    //Draw the map
     m_Map.Draw();
+
+    //Draw the pacman
     m_Pacman.Draw();
+    m_Pacman.Update(m_Map);
+
 
     /*
      * Do not touch the code below as they serve the purpose for

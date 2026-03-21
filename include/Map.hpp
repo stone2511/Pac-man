@@ -14,11 +14,15 @@ public:
 
     bool IsWall(float x, float y) const;
 
+    //For the wall
+    bool IsWallOrEdge(int gridX, int gridY) const;
+
 private:
     std::vector<std::vector<int>> m_Level;
     
     std::vector<std::shared_ptr<Util::GameObject>> m_Blocks;
     std::vector<std::shared_ptr<Util::GameObject>> m_dots;
+    std::vector<std::shared_ptr<Util::GameObject>> m_dotplus;
 
     float m_GridSize = 32.0f;
     float m_StartX;
