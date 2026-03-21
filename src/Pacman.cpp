@@ -11,14 +11,25 @@ void Pacman::Start() {
     m_Pacman->SetZIndex(10);
 }
 
-void Pacman::Update() {
+void Pacman::Update(const Map& map) {
     auto pos = m_Pacman->m_Transform.translation;
 
     //Move Logic
-    if (Util::Input::IsKeyPressed(Util::Keycode::W)) { pos.y += m_Speed; }
-    if (Util::Input::IsKeyPressed(Util::Keycode::S)) { pos.y -= m_Speed; }
-    if (Util::Input::IsKeyPressed(Util::Keycode::A)) { pos.x -= m_Speed; }
-    if (Util::Input::IsKeyPressed(Util::Keycode::D)) { pos.x += m_Speed; }
+    glm::vec2 nextPosY = pos;
+    if (Util::Input::IsKeyPressed(Util::Keycode::W)) { nextPosY.y += m_Speed; }
+    if (Util::Input::IsKeyPressed(Util::Keycode::S)) { nextPosY.y -= m_Speed; }
+
+    if (!map.IsWall(pos.x, nextPosY.y)) {
+        pos.y = nextPosY.y;
+    }
+
+    glm::vec2 nextPosX = pos;
+    if (Util::Input::IsKeyPressed(Util::Keycode::A)) { nextPosX.x -= m_Speed; }
+    if (Util::Input::IsKeyPressed(Util::Keycode::D)) { nextPosX.x += m_Speed; }
+
+    if (!map.IsWall(nextPosX.x, pos.y)) {
+        pos.x = nextPosX.x;
+    }
 
     m_Pacman->m_Transform.translation = pos;
 }
@@ -27,6 +38,8 @@ void Pacman::Draw() {
     m_Pacman->Draw();
 }
 
+/*
 glm::vec2 Pacman::GetPosition() const {
     return m_Pacman->m_Transform.translation;
 }
+*/

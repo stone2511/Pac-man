@@ -18,7 +18,7 @@ void App::Start() {
 
 void App::Update() {
 
-    m_Pacman.Update();
+    m_Pacman.Update(m_Map);
     m_Map.Draw();
     m_Pacman.Draw();
 
