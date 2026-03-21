@@ -15,8 +15,8 @@ void Map::Start() {
         {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
         {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
         {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 0, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
-        {2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2, 2}, // 👈 左右相通的隧道
+        {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
+        {2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2, 2}, //tunnel
         {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
         {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0},
         {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
@@ -103,10 +103,20 @@ void Map::Start() {
                 
                 m_dotplus.push_back(dotplus);
             }
+
+            else if (m_Level[y][x] == 4) {
+                auto door = std::make_shared<Util::GameObject>();
+            
+                door->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/door.png"));
+                
+                door->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                door->SetZIndex(0);
+                
+                m_door.push_back(door);
+            }
         }
     }
 }
-
 
 void Map::Draw() {
     for (auto& block : m_Blocks) {
@@ -117,6 +127,9 @@ void Map::Draw() {
     }
     for (auto& dotplus : m_dotplus) {
         dotplus->Draw();
+    }
+    for (auto& door : m_door) {
+        door->Draw();
     }
 }
 
@@ -130,7 +143,14 @@ bool Map::IsWall(float x, float y) const {
         return true;
     }
 
-    return m_Level[gridY][gridX] == 1;
+    return (m_Level[gridY][gridX] == 1);
+}
+
+bool Map::IsDoor(float x, float y) const {
+    int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
+    int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
+
+    return (m_Level[gridY][gridX] == 4);
 }
 
 bool Map::IsWallOrEdge(int gridX, int gridY) const {
