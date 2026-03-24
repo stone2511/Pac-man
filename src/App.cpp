@@ -14,18 +14,26 @@ void App::Start() {
     //Init Pacman
     m_Pacman.Start();
 
+    //Init Scoreboard
+    m_Scoreboard.Start();
+
     m_CurrentState = State::UPDATE;
 }
 
 void App::Update() {
-
+    
     //Draw the map
     m_Map.Draw();
-
     //Draw the pacman
     m_Pacman.Draw();
-    m_Pacman.Update(m_Map);
+    //Draw the scoreboard
+    m_Scoreboard.Draw();
+    
+    int points = m_Pacman.Update(m_Map);
 
+    if (points > 0) {
+        m_Scoreboard.AddScore(points); 
+    }
 
     /*
      * Do not touch the code below as they serve the purpose for

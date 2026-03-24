@@ -3,6 +3,7 @@
 #include "Util/Image.hpp"
 #include <imgui.h>
 #include <string>
+#include <cmath> 
 
 void Map::Start() {
     //Map
@@ -159,4 +160,26 @@ bool Map::IsWallOrEdge(int gridX, int gridY) const {
     }
 
     return m_Level[gridY][gridX] == 1;
+}
+
+
+int Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
+    int scoreToGive = 0;
+    float eatRadius = 15.0f;
+
+    for (auto it = m_dots.begin(); it != m_dots.end(); ) {
+        glm::vec2 dotPos = (*it)->m_Transform.translation;
+        
+        float distX = std::abs(pacmanPos.x - dotPos.x);
+        float distY = std::abs(pacmanPos.y - dotPos.y);
+
+        if (distX < eatRadius && distY < eatRadius) {
+            it = m_dots.erase(it); 
+            scoreToGive += 10;
+        } else {
+            ++it; 
+        }
+    }
+    
+    return scoreToGive;
 }

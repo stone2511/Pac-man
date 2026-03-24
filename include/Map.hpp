@@ -18,6 +18,8 @@ public:
     //For the wall
     bool IsWallOrEdge(int gridX, int gridY) const;
 
+    int CheckAndEatBeans(glm::vec2 pacmanPos);
+
 private:
     std::vector<std::vector<int>> m_Level;
     
