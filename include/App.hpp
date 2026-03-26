@@ -2,9 +2,14 @@
 #define APP_HPP
 
 #include "pch.hpp" // IWYU pragma: export
+
 #include "Util/GameObject.hpp"
+#include "Util/Text.hpp"
+#include "Util/Color.hpp"
+
 #include "Map.hpp"
 #include "Pacman.hpp"
+#include "Scoreboard.hpp"
 
 class App {
 public:
@@ -30,6 +35,7 @@ private:
 
     Map m_Map;
     Pacman m_Pacman;
+    Scoreboard m_Scoreboard;
 };
 
 #endif

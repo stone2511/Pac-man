@@ -13,7 +13,7 @@ void Pacman::Start() {
     m_Pacman->SetZIndex(10);
 }
 
-void Pacman::Update(const Map& map) {
+int Pacman::Update(Map& map) {
     //Pacman coordinate
     auto pos = m_Pacman->m_Transform.translation;
 
@@ -46,13 +46,16 @@ void Pacman::Update(const Map& map) {
 
     //Move
     m_Pacman->m_Transform.translation = pos;
+
+    int score = map.CheckAndEatBeans(pos);
+    return score;
 }
 
 void Pacman::Draw() {
     m_Pacman->Draw();
 }
 
-bool Pacman::IsColliding(const Map& map, glm::vec2 pos) {
+bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
     //Radius of the entity
     float radius = 14.0f; 
 

@@ -9,7 +9,7 @@
 class Pacman {
 public:
     void Start();   //Init
-    void Update(const Map& map);    //Movement and Behavior
+    int Update(Map& map);    //Movement and Behavior
     void Draw();    //Draw
 
 private:
@@ -18,7 +18,7 @@ private:
     float m_Speed = 4.0f;
 
     //Colliging Detect
-    bool IsColliding(const Map& map, glm::vec2 pos);
+    bool IsColliding(Map& map, glm::vec2 pos);
 };
 
 #endif
