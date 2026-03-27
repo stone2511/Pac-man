@@ -30,7 +30,7 @@ void App::Update() {
     //Draw the pacman
     m_Pacman.Draw();
     //Draw the Ghost
-    m_GhostManager.Update(m_Map);
+    m_GhostManager.Update(m_Map, m_Pacman.GetPosition());
     m_GhostManager.Draw();
     //Draw the scoreboard
     m_Scoreboard.Draw();

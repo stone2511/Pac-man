@@ -8,7 +8,7 @@ class Ghost_Pinky : public Ghost {
 public:
     explicit Ghost_Pinky(glm::vec2 worldPos);
 
-    void Update(const Map& map) override; 
+    void Update(const Map& map, glm::vec2 pacmanPos, GhostState state) override; 
 };
 
 #endif

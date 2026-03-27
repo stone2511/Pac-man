@@ -4,6 +4,20 @@
 #include <cmath>
 
 void Pacman::Start() {
+    
+    Animate();
+
+    m_Pacman = std::make_shared<Util::GameObject>();
+    m_Pacman->SetDrawable(m_CurrentAnimation);
+    
+    //Pacman Init Position
+    m_Pacman->m_Transform.translation = {0.0f, -160.0f};
+    m_Pacman->SetZIndex(10);
+
+    UpdateAnimation(false);
+}
+
+void Pacman::Animate(){
     const auto makeAnimation = [](const std::string& folder,
                                   const std::string& prefix) {
         std::vector<std::string> frames;
@@ -21,15 +35,7 @@ void Pacman::Start() {
     m_LeftAnimation = makeAnimation("pacman_left", "pacman_left");
     m_RightAnimation = makeAnimation("pacman_right", "pacman_right");
     m_CurrentAnimation = m_RightAnimation;
-
-    m_Pacman = std::make_shared<Util::GameObject>();
-    m_Pacman->SetDrawable(m_CurrentAnimation);
     
-    //Pacman Init Position
-    m_Pacman->m_Transform.translation = {0.0f, -160.0f};
-    m_Pacman->SetZIndex(10);
-
-    UpdateAnimation(false);
 }
 
 int Pacman::Update(Map& map) {
@@ -138,4 +144,8 @@ void Pacman::UpdateAnimation(bool isMoving) {
 
     animation->Pause();
     animation->SetCurrentFrame(0);
+}
+
+glm::vec2 Pacman::GetPosition() const {
+    return m_Pacman->m_Transform.translation;
 }

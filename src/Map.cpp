@@ -143,15 +143,22 @@ void Map::Draw() {
 
 bool Map::IsWall(float x, float y) const {
 
-    int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
-    int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
+    int gridX = std::round((x - m_StartX) / m_GridSize);
+    int gridY = std::round((m_StartY - y) / m_GridSize);
 
     
-    if (gridY < 0 || gridY >= m_Level.size() || gridX < 0 || gridX >= m_Level[0].size()) {
-        return true;
+    int maxX = m_Level[0].size() - 1;
+    
+    
+    if (gridX <= 0 || gridX >= maxX) {
+        
+        if (gridY != 9) {
+            return true;
+        }
     }
 
-    return (m_Level[gridY][gridX] == 1);
+
+    return IsWallOrEdge(gridX, gridY);
 }
 
 bool Map::IsDoor(float x, float y) const {
@@ -235,3 +242,21 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
 
     return false;
 }
+
+glm::vec2 Map::GetClosestGridCenter(float x, float y) const {
+
+    int gridX = std::round((x - m_StartX) / m_GridSize);
+    int gridY = std::round((m_StartY - y) / m_GridSize);
+
+    int maxX = m_Level[0].size() - 1;
+    int maxY = m_Level.size() - 1;
+    
+    gridX = std::clamp(gridX, 0, maxX);
+    gridY = std::clamp(gridY, 0, maxY);
+
+    float centerX = m_StartX + (gridX * m_GridSize);
+    float centerY = m_StartY - (gridY * m_GridSize);
+
+    return glm::vec2(centerX, centerY);
+}
+
