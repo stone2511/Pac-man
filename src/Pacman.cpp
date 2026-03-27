@@ -9,7 +9,7 @@ void Pacman::Start() {
     m_Pacman->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/character/player.png"));
     
     //Pacman Init Position
-    m_Pacman->m_Transform.translation = {-288.0f, -288.0f};
+    m_Pacman->m_Transform.translation = {0.0f, -160.0f};
     m_Pacman->SetZIndex(10);
 }
 
@@ -17,32 +17,29 @@ int Pacman::Update(Map& map) {
     //Pacman coordinate
     auto pos = m_Pacman->m_Transform.translation;
 
-    //Move Logic
-    //---------------------------------
-    //Up and Down Judgement
-    glm::vec2 nextPosY = pos;
-    if (Util::Input::IsKeyPressed(Util::Keycode::W)) 
-    { nextPosY.y += m_Speed; }
-    if (Util::Input::IsKeyPressed(Util::Keycode::S)) 
-    { nextPosY.y -= m_Speed; }
+    if (Util::Input::IsKeyDown(Util::Keycode::W)) {
+        m_QueuedDirection = Direction::Up;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
+        m_QueuedDirection = Direction::Down;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
+        m_QueuedDirection = Direction::Left;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
+        m_QueuedDirection = Direction::Right;
+    }
 
-    //Check if there is any colliding
-    if (!IsColliding(map, glm::vec2(pos.x, nextPosY.y))) 
-    { pos.y = nextPosY.y;}
-    //---------------------------------
-    
-    //---------------------------------
-    //Right and Left Judgement
-    glm::vec2 nextPosX = pos;
-    if (Util::Input::IsKeyPressed(Util::Keycode::A))
-    { nextPosX.x -= m_Speed; }
-    if (Util::Input::IsKeyPressed(Util::Keycode::D))
-    { nextPosX.x += m_Speed; }
+    // Turn as soon as the requested direction becomes available.
+    const auto queuedPos = pos + GetDirectionOffset(m_QueuedDirection);
+    if (m_QueuedDirection != Direction::None &&
+        !IsColliding(map, queuedPos)) {
+        m_CurrentDirection = m_QueuedDirection;
+    }
 
-    //Check if there is any colliding
-    if (!IsColliding(map, glm::vec2(nextPosX.x, pos.y)))
-    { pos.x = nextPosX.x;}
-    //---------------------------------
+    // Keep moving in the current direction until a wall blocks the path.
+    const auto nextPos = pos + GetDirectionOffset(m_CurrentDirection);
+    if (m_CurrentDirection != Direction::None &&
+        !IsColliding(map, nextPos)) {
+        pos = nextPos;
+    }
 
     //Move
     m_Pacman->m_Transform.translation = pos;
@@ -65,4 +62,20 @@ bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
            map.IsWall(pos.x + radius, pos.y - radius) || // 右下角
            map.IsDoor(pos.x - radius, pos.y - radius) ||
            map.IsDoor(pos.x + radius, pos.y - radius);
+}
+
+glm::vec2 Pacman::GetDirectionOffset(Direction direction) const {
+    switch (direction) {
+        case Direction::Up:
+            return {0.0f, m_Speed};
+        case Direction::Down:
+            return {0.0f, -m_Speed};
+        case Direction::Left:
+            return {-m_Speed, 0.0f};
+        case Direction::Right:
+            return {m_Speed, 0.0f};
+        case Direction::None:
+        default:
+            return {0.0f, 0.0f};
+    }
 }

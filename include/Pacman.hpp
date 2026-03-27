@@ -13,12 +13,23 @@ public:
     void Draw();    //Draw
 
 private:
+    enum class Direction {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
     std::shared_ptr<Util::GameObject> m_Pacman;
     //Pacman Speed
     float m_Speed = 4.0f;
+    Direction m_CurrentDirection = Direction::None;
+    Direction m_QueuedDirection = Direction::None;
 
     //Colliging Detect
     bool IsColliding(Map& map, glm::vec2 pos);
+    glm::vec2 GetDirectionOffset(Direction direction) const;
 };
 
 #endif
