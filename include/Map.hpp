@@ -19,6 +19,7 @@ public:
     bool IsWallOrEdge(int gridX, int gridY) const;
 
     int CheckAndEatBeans(glm::vec2 pacmanPos);
+    bool TryWrapTunnel(glm::vec2& pos, float radius) const;
 
 private:
     glm::vec2 GridToWorld(float gridX, float gridY) const;
