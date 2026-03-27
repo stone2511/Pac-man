@@ -1,16 +1,35 @@
 #include "Pacman.hpp"
-#include "Util/Image.hpp"
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include <cmath>
 
 void Pacman::Start() {
+    const auto makeAnimation = [](const std::string& folder,
+                                  const std::string& prefix) {
+        std::vector<std::string> frames;
+        frames.reserve(6);
+        for (int i = 0; i < 6; ++i) {
+            frames.push_back(RESOURCE_DIR"/Image/character/" + folder + "/" +
+                             prefix + std::to_string(i) + ".png");
+        }
+
+        return std::make_shared<Util::Animation>(frames, false, 80, true, 0);
+    };
+
+    m_UpAnimation = makeAnimation("pacman_up", "pacman_up");
+    m_DownAnimation = makeAnimation("pacman_down", "pacman_down");
+    m_LeftAnimation = makeAnimation("pacman_left", "pacman_left");
+    m_RightAnimation = makeAnimation("pacman_right", "pacman_right");
+    m_CurrentAnimation = m_RightAnimation;
+
     m_Pacman = std::make_shared<Util::GameObject>();
-    m_Pacman->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/character/player.png"));
+    m_Pacman->SetDrawable(m_CurrentAnimation);
     
     //Pacman Init Position
     m_Pacman->m_Transform.translation = {0.0f, -160.0f};
     m_Pacman->SetZIndex(10);
+
+    UpdateAnimation(false);
 }
 
 int Pacman::Update(Map& map) {
@@ -37,13 +56,17 @@ int Pacman::Update(Map& map) {
     // Keep moving in the current direction until a wall blocks the path.
     auto nextPos = pos + GetDirectionOffset(m_CurrentDirection);
     map.TryWrapTunnel(nextPos, 14.0f);
+    bool didMove = false;
     if (m_CurrentDirection != Direction::None &&
         !IsColliding(map, nextPos)) {
         pos = nextPos;
+        didMove = true;
+        m_FacingDirection = m_CurrentDirection;
     }
 
     //Move
     m_Pacman->m_Transform.translation = pos;
+    UpdateAnimation(didMove);
 
     int score = map.CheckAndEatBeans(pos);
     return score;
@@ -84,4 +107,35 @@ glm::vec2 Pacman::GetDirectionOffset(Direction direction) const {
         default:
             return {0.0f, 0.0f};
     }
+}
+
+std::shared_ptr<Util::Animation> Pacman::GetAnimation(Direction direction) const {
+    switch (direction) {
+        case Direction::Up:
+            return m_UpAnimation;
+        case Direction::Down:
+            return m_DownAnimation;
+        case Direction::Left:
+            return m_LeftAnimation;
+        case Direction::Right:
+        case Direction::None:
+        default:
+            return m_RightAnimation;
+    }
+}
+
+void Pacman::UpdateAnimation(bool isMoving) {
+    auto animation = GetAnimation(m_FacingDirection);
+    if (m_CurrentAnimation != animation) {
+        m_CurrentAnimation = animation;
+        m_Pacman->SetDrawable(animation);
+    }
+
+    if (isMoving) {
+        animation->Play();
+        return;
+    }
+
+    animation->Pause();
+    animation->SetCurrentFrame(0);
 }
