@@ -10,6 +10,7 @@
 #include "Map.hpp"
 #include "Pacman.hpp"
 #include "Scoreboard.hpp"
+#include "GhostManager.hpp"
 
 class App {
 public:
@@ -36,6 +37,7 @@ private:
     Map m_Map;
     Pacman m_Pacman;
     Scoreboard m_Scoreboard;
+    GhostManager m_GhostManager;
 };
 
 #endif

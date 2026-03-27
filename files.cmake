@@ -3,6 +3,12 @@ set(SRC_FILES
     Map.cpp
     Pacman.cpp
     Scoreboard.cpp
+    Ghost_Pinky.cpp
+    Ghost_Inky.cpp
+    Ghost_Blinky.cpp
+    Ghost_Clyde.cpp
+    GhostManager.cpp
+    Ghost.cpp
 )
 
 set(INCLUDE_FILES
@@ -10,6 +16,12 @@ set(INCLUDE_FILES
     Map.hpp
     Pacman.hpp
     Scoreboard.hpp
+    Ghost_Pinky.hpp
+    Ghost_Inky.hpp
+    Ghost_Blinky.hpp
+    Ghost_Clyde.hpp
+    GhostManager.hpp
+    Ghost.hpp
 )
 
 set(TEST_FILES
