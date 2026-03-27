@@ -83,17 +83,14 @@ void Pacman::Draw() {
 }
 
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
-<<<<<<< HEAD
-     
-=======
-    //Radius of the entity
-    float radius = 14.0f;
 
+    //Radius of the entity
+    float m_radius = 14.0f;
+    
     glm::vec2 wrappedPos = pos;
-    if (map.TryWrapTunnel(wrappedPos, radius)) {
+    if (map.TryWrapTunnel(wrappedPos, m_radius)) {
         return false;
     }
->>>>>>> main
 
     return map.IsWall(pos.x - m_radius, pos.y + m_radius) || // 左上角
            map.IsWall(pos.x + m_radius, pos.y + m_radius) || // 右上角

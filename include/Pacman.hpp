@@ -10,12 +10,9 @@
 class Pacman {
 public:
     void Start();   //Init
-<<<<<<< HEAD
     int Update(Map& map);    //Movement and behavior
-=======
     void Animate();
     int Update(Map& map);    //Movement and Behavior
->>>>>>> main
     void Draw();    //Draw
 
     glm::vec2 GetPosition() const;
@@ -40,14 +37,9 @@ private:
     //Pacman Speed
     float m_Speed = 4.0f;
 
-<<<<<<< HEAD
-    //Radius of the entity
-    float m_radius = 14.0f;
-=======
     Direction m_CurrentDirection = Direction::None;
     Direction m_QueuedDirection = Direction::None;
     Direction m_FacingDirection = Direction::Right;
->>>>>>> main
 
     //Colliging Detect
     bool IsColliding(Map& map, glm::vec2 pos);
