@@ -12,7 +12,6 @@ public:
     void Start();   //Init
     int Update(Map& map);    //Movement and behavior
     void Animate();
-    int Update(Map& map);    //Movement and Behavior
     void Draw();    //Draw
 
     glm::vec2 GetPosition() const;
