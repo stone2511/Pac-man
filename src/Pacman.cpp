@@ -35,7 +35,8 @@ int Pacman::Update(Map& map) {
     }
 
     // Keep moving in the current direction until a wall blocks the path.
-    const auto nextPos = pos + GetDirectionOffset(m_CurrentDirection);
+    auto nextPos = pos + GetDirectionOffset(m_CurrentDirection);
+    map.TryWrapTunnel(nextPos, 14.0f);
     if (m_CurrentDirection != Direction::None &&
         !IsColliding(map, nextPos)) {
         pos = nextPos;
@@ -54,7 +55,12 @@ void Pacman::Draw() {
 
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
     //Radius of the entity
-    float radius = 14.0f; 
+    float radius = 14.0f;
+
+    glm::vec2 wrappedPos = pos;
+    if (map.TryWrapTunnel(wrappedPos, radius)) {
+        return false;
+    }
 
     return map.IsWall(pos.x - radius, pos.y + radius) || // 左上角
            map.IsWall(pos.x + radius, pos.y + radius) || // 右上角

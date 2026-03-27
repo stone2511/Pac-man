@@ -215,3 +215,41 @@ int Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
     
     return scoreToGive;
 }
+
+bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
+    if (m_Level.empty()) {
+        return false;
+    }
+
+    constexpr int tunnelRow = 9;
+
+    if (tunnelRow < 0 || tunnelRow >= static_cast<int>(m_Level.size())) {
+        return false;
+    }
+
+    const float tunnelY = m_StartY - (tunnelRow * m_GridSize);
+    const float tunnelTolerance = m_GridSize / 2.0f;
+    if (std::abs(pos.y - tunnelY) > tunnelTolerance) {
+        return false;
+    }
+
+    const float leftEdge = m_StartX - (m_GridSize / 2.0f);
+    const float rightEdge =
+        m_StartX + (static_cast<float>(m_Level[0].size()) * m_GridSize) -
+        (m_GridSize / 2.0f);
+    const float leftEntranceX = m_StartX;
+    const float rightEntranceX =
+        m_StartX + (static_cast<float>(m_Level[0].size() - 1) * m_GridSize);
+
+    if (pos.x - radius <= leftEdge) {
+        pos.x = rightEntranceX;
+        return true;
+    }
+
+    if (pos.x + radius >= rightEdge) {
+        pos.x = leftEntranceX;
+        return true;
+    }
+
+    return false;
+}
