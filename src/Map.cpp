@@ -3,9 +3,16 @@
 #include "Util/Image.hpp"
 #include <imgui.h>
 #include <string>
-#include <cmath> 
+#include <cmath>
+#include <utility>
 
 void Map::Start() {
+    m_Blocks.clear();
+    m_dots.clear();
+    m_dotplus.clear();
+    m_door.clear();
+    m_Ghosts.clear();
+
     //Map
     m_Level = {
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -117,6 +124,21 @@ void Map::Start() {
             }
         }
     }
+
+    const std::vector<std::pair<std::string, glm::vec2>> ghostConfigs = {
+        {RESOURCE_DIR"/Image/ghost/blinky0.png", {10.0f, 7.0f}},
+        {RESOURCE_DIR"/Image/ghost/pinky0.png",  {8.9f, 9.0f}},
+        {RESOURCE_DIR"/Image/ghost/inky0.png",   {10.0f, 9.0f}},
+        {RESOURCE_DIR"/Image/ghost/clyde0.png",  {11.1f, 9.0f}},
+    };
+
+    for (const auto& [texturePath, gridPos] : ghostConfigs) {
+        auto ghost = std::make_shared<Util::GameObject>();
+        ghost->SetDrawable(std::make_shared<Util::Image>(texturePath));
+        ghost->m_Transform.translation = GridToWorld(gridPos.x, gridPos.y);
+        ghost->SetZIndex(5);
+        m_Ghosts.push_back(ghost);
+    }
 }
 
 void Map::Draw() {
@@ -131,6 +153,9 @@ void Map::Draw() {
     }
     for (auto& door : m_door) {
         door->Draw();
+    }
+    for (auto& ghost : m_Ghosts) {
+        ghost->Draw();
     }
 }
 
@@ -160,6 +185,13 @@ bool Map::IsWallOrEdge(int gridX, int gridY) const {
     }
 
     return m_Level[gridY][gridX] == 1;
+}
+
+glm::vec2 Map::GridToWorld(float gridX, float gridY) const {
+    return {
+        m_StartX + (gridX * m_GridSize),
+        m_StartY - (gridY * m_GridSize)
+    };
 }
 
 
