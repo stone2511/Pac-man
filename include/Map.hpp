@@ -29,7 +29,7 @@ private:
     std::vector<std::shared_ptr<Util::GameObject>> m_dots;
     std::vector<std::shared_ptr<Util::GameObject>> m_dotplus;
     std::vector<std::shared_ptr<Util::GameObject>> m_door;
-    std::vector<std::shared_ptr<Util::GameObject>> m_Ghosts;
+    //std::vector<std::shared_ptr<Util::GameObject>> m_Ghosts;
 
     float m_GridSize = 32.0f;
     float m_StartX;

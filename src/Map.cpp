@@ -125,20 +125,6 @@ void Map::Start() {
         }
     }
 
-    const std::vector<std::pair<std::string, glm::vec2>> ghostConfigs = {
-        {RESOURCE_DIR"/Image/ghost/blinky0.png", {10.0f, 7.0f}},
-        {RESOURCE_DIR"/Image/ghost/pinky0.png",  {8.9f, 9.0f}},
-        {RESOURCE_DIR"/Image/ghost/inky0.png",   {10.0f, 9.0f}},
-        {RESOURCE_DIR"/Image/ghost/clyde0.png",  {11.1f, 9.0f}},
-    };
-
-    for (const auto& [texturePath, gridPos] : ghostConfigs) {
-        auto ghost = std::make_shared<Util::GameObject>();
-        ghost->SetDrawable(std::make_shared<Util::Image>(texturePath));
-        ghost->m_Transform.translation = GridToWorld(gridPos.x, gridPos.y);
-        ghost->SetZIndex(5);
-        m_Ghosts.push_back(ghost);
-    }
 }
 
 void Map::Draw() {
@@ -153,9 +139,6 @@ void Map::Draw() {
     }
     for (auto& door : m_door) {
         door->Draw();
-    }
-    for (auto& ghost : m_Ghosts) {
-        ghost->Draw();
     }
 }
 

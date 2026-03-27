@@ -14,6 +14,9 @@ void App::Start() {
     //Init Pacman
     m_Pacman.Start();
 
+    //Init Ghost
+    m_GhostManager.Start();
+
     //Init Scoreboard
     m_Scoreboard.Start();
 
@@ -26,6 +29,9 @@ void App::Update() {
     m_Map.Draw();
     //Draw the pacman
     m_Pacman.Draw();
+    //Draw the Ghost
+    m_GhostManager.Update(m_Map);
+    m_GhostManager.Draw();
     //Draw the scoreboard
     m_Scoreboard.Draw();
     

@@ -10,6 +10,7 @@
 #include "Map.hpp"
 #include "Pacman.hpp"
 #include "Scoreboard.hpp"
+#include "GhostManager.hpp"
 
 class App {
 public:
