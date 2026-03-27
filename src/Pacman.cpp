@@ -56,13 +56,12 @@ void Pacman::Draw() {
 }
 
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
-    //Radius of the entity
-    float radius = 14.0f; 
+     
 
-    return map.IsWall(pos.x - radius, pos.y + radius) || // 左上角
-           map.IsWall(pos.x + radius, pos.y + radius) || // 右上角
-           map.IsWall(pos.x - radius, pos.y - radius) || // 左下角
-           map.IsWall(pos.x + radius, pos.y - radius) || // 右下角
-           map.IsDoor(pos.x - radius, pos.y - radius) ||
-           map.IsDoor(pos.x + radius, pos.y - radius);
+    return map.IsWall(pos.x - m_radius, pos.y + m_radius) || // 左上角
+           map.IsWall(pos.x + m_radius, pos.y + m_radius) || // 右上角
+           map.IsWall(pos.x - m_radius, pos.y - m_radius) || // 左下角
+           map.IsWall(pos.x + m_radius, pos.y - m_radius) || // 右下角
+           map.IsDoor(pos.x - m_radius, pos.y - m_radius) ||
+           map.IsDoor(pos.x + m_radius, pos.y - m_radius);
 }
