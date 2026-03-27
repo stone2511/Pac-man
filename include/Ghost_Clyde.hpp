@@ -6,7 +6,7 @@
 
 class Ghost_Clyde : public Ghost {
 public:
-    Clyde(glm::vec2 worldPos);
+    explicit Ghost_Clyde(glm::vec2 worldPos);
 
     void Update(const Map& map) override; 
 };

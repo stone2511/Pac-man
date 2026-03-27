@@ -15,7 +15,7 @@ void App::Start() {
     m_Pacman.Start();
 
     //Init Ghost
-    m_GhostManager.Start();
+    m_GhostManager.Start(m_Map);
 
     //Init Scoreboard
     m_Scoreboard.Start();

@@ -6,7 +6,7 @@
 
 class Ghost_Inky : public Ghost {
 public:
-    Inky(glm::vec2 worldPos);
+    explicit Ghost_Inky(glm::vec2 worldPos);
 
     void Update(const Map& map) override; 
 };

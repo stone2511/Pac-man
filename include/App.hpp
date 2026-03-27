@@ -37,6 +37,7 @@ private:
     Map m_Map;
     Pacman m_Pacman;
     Scoreboard m_Scoreboard;
+    GhostManager m_GhostManager;
 };
 
 #endif

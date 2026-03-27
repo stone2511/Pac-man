@@ -20,17 +20,15 @@ public:
 
     int CheckAndEatBeans(glm::vec2 pacmanPos);
     bool TryWrapTunnel(glm::vec2& pos, float radius) const;
-
-private:
     glm::vec2 GridToWorld(float gridX, float gridY) const;
 
+private:
     std::vector<std::vector<int>> m_Level;
     
     std::vector<std::shared_ptr<Util::GameObject>> m_Blocks;
     std::vector<std::shared_ptr<Util::GameObject>> m_dots;
     std::vector<std::shared_ptr<Util::GameObject>> m_dotplus;
     std::vector<std::shared_ptr<Util::GameObject>> m_door;
-    //std::vector<std::shared_ptr<Util::GameObject>> m_Ghosts;
 
     float m_GridSize = 32.0f;
     float m_StartX;

@@ -11,7 +11,6 @@ void Map::Start() {
     m_dots.clear();
     m_dotplus.clear();
     m_door.clear();
-    m_Ghosts.clear();
 
     //Map
     m_Level = {
