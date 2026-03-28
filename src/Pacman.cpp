@@ -91,7 +91,6 @@ bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
         return false;
     }
 
-
     return map.IsWall(pos.x - m_radius, pos.y + m_radius) || // 左上角
            map.IsWall(pos.x + m_radius, pos.y + m_radius) || // 右上角
            map.IsWall(pos.x - m_radius, pos.y - m_radius) || // 左下角
