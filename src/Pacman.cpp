@@ -144,7 +144,6 @@ void Pacman::UpdateAnimation(bool isMoving) {
     }
 
     animation->Pause();
-    animation->SetCurrentFrame(0);
 }
 
 glm::vec2 Pacman::GetPosition() const {
