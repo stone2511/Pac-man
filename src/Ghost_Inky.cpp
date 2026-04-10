@@ -2,10 +2,16 @@
 
 
 Ghost_Inky::Ghost_Inky(glm::vec2 worldPos) 
-    : Ghost(RESOURCE_DIR"/Image/ghost/inky0.png", worldPos) {
+    : Ghost("Inky", RESOURCE_DIR"/Image/ghost/inky0.png", 'I', worldPos) {
 }
 
 void Ghost_Inky::Update(const Map& map, glm::vec2 pacmanPos, GhostState state) {
-    // TODO
-    // auto pos = m_GhostObj->m_Transform.translation;
+    (void)pacmanPos;
+    (void)state;
+
+    if (UpdateHouseRelease()) {
+        return;
+    }
+
+    UpdateRandomMovement(map);
 }

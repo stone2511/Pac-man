@@ -165,6 +165,11 @@ bool Map::IsDoor(float x, float y) const {
     int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
     int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
 
+    if (gridY < 0 || gridY >= static_cast<int>(m_Level.size()) ||
+        gridX < 0 || gridX >= static_cast<int>(m_Level[0].size())) {
+        return false;
+    }
+
     return (m_Level[gridY][gridX] == 4);
 }
 
@@ -259,4 +264,3 @@ glm::vec2 Map::GetClosestGridCenter(float x, float y) const {
 
     return glm::vec2(centerX, centerY);
 }
-
