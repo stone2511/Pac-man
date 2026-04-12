@@ -18,6 +18,7 @@ public:
         START,
         UPDATE,
         RESET,
+        DEAD,
         END,
     };
 
@@ -29,6 +30,8 @@ public:
 
     void Reset();
 
+    void Dead();
+
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:
@@ -38,7 +41,6 @@ private:
 
 private:
     State m_CurrentState = State::START;
-    //float m_LevelClearTime = 0.0f;
     std::shared_ptr<Util::GameObject> m_GameText;
     int points = 0;
 

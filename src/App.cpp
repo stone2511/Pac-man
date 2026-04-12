@@ -43,9 +43,11 @@ void App::Update() {
             
     if (m_Map.IsLevelClear()){
         m_CurrentState = State::RESET;
-        //m_LevelClearTime = 0.0f;
     }
 
+    else if (m_GhostManager.CheckCollision(m_Pacman.GetPosition())){
+        m_CurrentState = State::DEAD;
+    }
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.
@@ -57,15 +59,27 @@ void App::Update() {
 }
 
 void App::Reset() {
-    //m_LevelClearTime += 0.016f;
+
     DrawVictory();
-            
+    m_GameText->Draw();
+
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
         m_Scoreboard.NextLevel();
         m_Map.ResetData();
         m_Pacman.Reset();
         m_GhostManager.Reset();
         m_CurrentState = State::UPDATE;     
+    }
+}
+
+void App::Dead() {
+    DrawVictory();
+    m_GameText->Draw();
+
+    if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
+        m_Pacman.Reset();
+        m_GhostManager.Reset();
+        m_CurrentState = State::UPDATE;
     }
 }
 
@@ -78,7 +92,6 @@ void App::DrawVictory(){
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
     m_GameText->m_Transform.translation = {0.0f, 0.0f};
-    m_GameText->Draw();
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)

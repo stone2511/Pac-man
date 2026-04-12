@@ -19,6 +19,10 @@ int main(int, char**) {
             case App::State::RESET:
                 app.Reset();
                 break;
+            
+            case App::State::DEAD:
+                app.Dead();
+                break;
 
             case App::State::END:
                 app.End();

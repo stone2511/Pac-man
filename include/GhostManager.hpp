@@ -13,6 +13,8 @@ public:
     void Draw();
     void Reset();
 
+    bool CheckCollision(glm::vec2 pacmanPos) const;
+
 private:
     std::vector<std::shared_ptr<Ghost>> m_Ghosts;
 
