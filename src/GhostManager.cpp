@@ -35,3 +35,10 @@ void GhostManager::Draw() {
         ghost->Draw();
     }
 }
+
+void GhostManager::Reset(){
+    for (auto& ghost : m_Ghosts) {
+        ghost->Reset();
+    }
+    m_StateTimer = 0.0f;
+}

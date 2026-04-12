@@ -13,6 +13,7 @@ public:
     int Update(Map& map);    //Movement and behavior
     void Animate();
     void Draw();    //Draw
+    void Reset();
 
     glm::vec2 GetPosition() const;
 

@@ -23,6 +23,10 @@ public:
     void Draw();
     glm::vec2 GetPosition() const;
 
+    void Reset();
+protected:
+    glm::vec2 m_SpawnPos;
+
 protected:
     std::shared_ptr<Util::GameObject> m_GhostObj;
     float m_Speed = 3.0f;
