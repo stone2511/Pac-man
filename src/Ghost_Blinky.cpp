@@ -17,7 +17,7 @@ void Ghost_Blinky::Update(const Map& map, glm::vec2 pacmanPos, GhostState state)
         targetPos = pacmanPos;
     } 
     else if (state == GhostState::SCATTER) {
-        targetPos = glm::vec2(600.0f, 300.0f); 
+        targetPos = glm::vec2(999.0f, 999.0f); 
     }
 
     //1. Decision time

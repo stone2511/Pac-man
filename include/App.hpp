@@ -39,6 +39,8 @@ private:
 
     void DrawVictory();
 
+    void DrawDead();
+
 private:
     State m_CurrentState = State::START;
     std::shared_ptr<Util::GameObject> m_GameText;

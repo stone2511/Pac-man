@@ -73,7 +73,7 @@ void App::Reset() {
 }
 
 void App::Dead() {
-    DrawVictory();
+    DrawDead();
     m_GameText->Draw();
 
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
@@ -89,6 +89,17 @@ void App::DrawVictory(){
         RESOURCE_DIR"/font/inkfree.ttf", 
         50, 
         "Victory(Press Tab to NextLevel)", 
+        Util::Color::FromName(Util::Colors::YELLOW)
+    ));
+    m_GameText->m_Transform.translation = {0.0f, 0.0f};
+}
+
+void App::DrawDead(){
+    m_GameText = std::make_shared<Util::GameObject>();
+    m_GameText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        50, 
+        "You dead. (Press Tab to Continue)", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
     m_GameText->m_Transform.translation = {0.0f, 0.0f};
