@@ -20,6 +20,9 @@ public:
 
     int CheckAndEatBeans(glm::vec2 pacmanPos);
     bool TryWrapTunnel(glm::vec2& pos, float radius) const;
+
+    bool IsLevelClear() const;
+    void ResetData();
     
     glm::vec2 GridToWorld(float gridX, float gridY) const;
     glm::vec2 GetClosestGridCenter(float x, float y) const;

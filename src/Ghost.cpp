@@ -14,7 +14,8 @@ Ghost::Ghost(const std::string& name,
       m_Rng(std::random_device{}()) {
     m_GhostObj = std::make_shared<Util::GameObject>();
     m_GhostObj->SetDrawable(std::make_shared<Util::Image>(texturePath));
-    m_GhostObj->m_Transform.translation = worldPos;
+    m_SpawnPos = worldPos;
+    m_GhostObj->m_Transform.translation = m_SpawnPos;
     m_GhostObj->SetZIndex(5);
 }
 
@@ -26,6 +27,9 @@ glm::vec2 Ghost::GetPosition() const {
     return m_GhostObj->m_Transform.translation;
 }
 
+void Ghost::Reset(){
+    m_GhostObj->m_Transform.translation = m_SpawnPos;
+}
 const std::string& Ghost::GetName() const {
     return m_Name;
 }

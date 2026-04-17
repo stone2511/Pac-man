@@ -82,6 +82,10 @@ void Pacman::Draw() {
     m_Pacman->Draw();
 }
 
+void Pacman::Reset(){
+    m_Pacman->m_Transform.translation = {0.0f, -160.0f};
+}
+
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
 
     //Radius of the entity

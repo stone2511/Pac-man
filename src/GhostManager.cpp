@@ -58,3 +58,25 @@ void GhostManager::Draw() {
         ghost->Draw();
     }
 }
+
+void GhostManager::Reset(){
+    for (auto& ghost : m_Ghosts) {
+        ghost->Reset();
+    }
+    m_StateTimer = 0.0f;
+}
+
+bool GhostManager::CheckCollision(glm::vec2 pacmanPos) const {
+    float death_radius = 18.0f;
+
+    for (const auto& ghost : m_Ghosts){
+        float distance = glm::distance(pacmanPos, ghost->GetPosition());
+
+        if(distance < death_radius){
+            return true;
+        }
+    }
+    
+    return false;
+}
+

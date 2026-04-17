@@ -48,6 +48,7 @@ void Map::Start() {
     for (int y = 0; y < m_Level.size(); y++) {
         for (int x = 0; x < m_Level[y].size(); x++) {
             
+
             if (m_Level[y][x] == 1) {
                 //I use binary method to encode the image name
                 //And use wallID to pair the correct wall texture
@@ -188,6 +189,28 @@ glm::vec2 Map::GridToWorld(float gridX, float gridY) const {
     };
 }
 
+bool Map::IsLevelClear() const { 
+    return m_dots.empty();
+}
+
+void Map::ResetData(){
+    m_dots.clear();
+
+    for (int y = 0; y < m_Level.size(); y++) {
+        for (int x = 0; x < m_Level[y].size(); x++) {
+            if (m_Level[y][x] == 2) {
+                auto dot = std::make_shared<Util::GameObject>();
+            
+                dot->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dot.png"));
+                
+                dot->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                dot->SetZIndex(0);
+                
+                m_dots.push_back(dot);
+            }
+        }
+    }
+}
 
 int Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
     int scoreToGive = 0;

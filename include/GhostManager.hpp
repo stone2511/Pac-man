@@ -11,6 +11,9 @@ public:
     void Start(const Map& map);
     void Update(const Map& map, glm::vec2 pacmanPos);
     void Draw();
+    void Reset();
+
+    bool CheckCollision(glm::vec2 pacmanPos) const;
 
 private:
     std::vector<std::shared_ptr<Ghost>> m_Ghosts;

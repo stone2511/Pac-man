@@ -17,6 +17,8 @@ public:
     enum class State {
         START,
         UPDATE,
+        RESET,
+        DEAD,
         END,
     };
 
@@ -26,13 +28,21 @@ public:
 
     void Update();
 
+    void Reset();
+
+    void Dead();
+
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:
     void ValidTask();
 
+    void DrawVictory();
+
 private:
     State m_CurrentState = State::START;
+    std::shared_ptr<Util::GameObject> m_GameText;
+    int points = 0;
 
     Map m_Map;
     Pacman m_Pacman;
