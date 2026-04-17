@@ -13,9 +13,13 @@ void Ghost_Blinky::Update(const Map& map, glm::vec2 pacmanPos, GhostState state)
         return;
     }
 
-    if (state == GhostState::FRIGHTENED) {
-        UpdateRandomMovement(map);
-        return;
+    glm::vec2 targetPos;
+    
+    if (state == GhostState::CHASE) {
+        targetPos = pacmanPos;
+    } 
+    else if (state == GhostState::SCATTER) {
+        targetPos = glm::vec2(999.0f, 999.0f); 
     }
 
     auto pos = GetPosition();

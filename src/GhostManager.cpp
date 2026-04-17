@@ -36,8 +36,7 @@ void GhostManager::Start(const Map& map) {
 }
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos) {
-
-    m_StateTimer += Util::Time::GetDeltaTimeMs() / 1000.0f; 
+    m_StateTimer += 0.016f; 
 
     if (m_CurrentState == GhostState::SCATTER && m_StateTimer >= 7.0f) {
         m_CurrentState = GhostState::CHASE;
@@ -60,10 +59,14 @@ void GhostManager::Draw() {
 }
 
 void GhostManager::Reset(){
+    m_CurrentState = GhostState::SCATTER;
+    m_StateTimer = 0.0f;
+
     for (auto& ghost : m_Ghosts) {
         ghost->Reset();
     }
-    m_StateTimer = 0.0f;
+    
+    
 }
 
 bool GhostManager::CheckCollision(glm::vec2 pacmanPos) const {

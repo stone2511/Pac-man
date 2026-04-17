@@ -73,22 +73,59 @@ void App::Reset() {
 }
 
 void App::Dead() {
-    DrawVictory();
+    if(m_Scoreboard.GetLives()==1){ 
+        m_CurrentState = State::GAMEOVER;
+    }
+    DrawDead();
     m_GameText->Draw();
 
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
+        m_Scoreboard.MinusLives();
         m_Pacman.Reset();
         m_GhostManager.Reset();
         m_CurrentState = State::UPDATE;
     }
 }
 
-void App::DrawVictory(){
+void App::Gameover() {
+    DrawGameover();
+    m_GameText->Draw();
+
+    GameOverTimer+=0.016f;
+
+    if(GameOverTimer > 2.0f){
+        m_CurrentState = State::END;
+    }
+}
+
+void App::DrawVictory() {
     m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
         50, 
         "Victory(Press Tab to NextLevel)", 
+        Util::Color::FromName(Util::Colors::YELLOW)
+    ));
+    m_GameText->m_Transform.translation = {0.0f, 0.0f};
+}
+
+void App::DrawDead() {
+    m_GameText = std::make_shared<Util::GameObject>();
+    m_GameText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        50, 
+        "You dead. (Press Tab to Continue)", 
+        Util::Color::FromName(Util::Colors::YELLOW)
+    ));
+    m_GameText->m_Transform.translation = {0.0f, 0.0f};
+}
+
+void App::DrawGameover(){
+     m_GameText = std::make_shared<Util::GameObject>();
+    m_GameText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        50, 
+        "Game Over!!!", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
     m_GameText->m_Transform.translation = {0.0f, 0.0f};

@@ -20,6 +20,15 @@ void Scoreboard::Start() {
         Util::Color::FromName(Util::Colors::WHITE)
     ));
     m_LevelText->m_Transform.translation = {-450.0f, 180.0f};
+
+    m_LivesText = std::make_shared<Util::GameObject>();
+    m_LivesText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        40, 
+        "Lives: 3" , 
+        Util::Color::FromName(Util::Colors::WHITE)
+    ));
+    m_LivesText->m_Transform.translation = {-450.0f, 110.0f};
 };
 
 void Scoreboard::AddScore(int points) {
@@ -27,9 +36,20 @@ void Scoreboard::AddScore(int points) {
     UpdateScoreText();
 }
 
+void Scoreboard::MinusLives(){
+    m_Lives--;
+    m_LivesText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        40, 
+        "Lives: " + std::to_string(m_Lives), 
+        Util::Color::FromName(Util::Colors::WHITE)
+    ));
+}
+
 void Scoreboard::Draw() {
     m_ScoreText->Draw();
     m_LevelText->Draw();
+    m_LivesText->Draw();
 }
 
 
@@ -53,5 +73,10 @@ void Scoreboard::UpdateScoreText() {
     ));
 }
 
+int Scoreboard::GetLives(){
+    return m_Lives;
+}
 
-
+void Scoreboard::ResetLives(){
+    m_Lives = 3;
+}

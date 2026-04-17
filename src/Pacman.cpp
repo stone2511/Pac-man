@@ -84,6 +84,8 @@ void Pacman::Draw() {
 
 void Pacman::Reset(){
     m_Pacman->m_Transform.translation = {0.0f, -160.0f};
+    m_CurrentDirection = Direction::None;
+    m_QueuedDirection = Direction::None;
 }
 
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
