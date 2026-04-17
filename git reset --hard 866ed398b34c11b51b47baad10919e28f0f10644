@@ -1,0 +1,271 @@
+[33mcommit 866ed398b34c11b51b47baad10919e28f0f10644[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mstructure[m[33m)[m
+Author: white0429 <ssg950429@gmail.com>
+Date:   Fri Apr 17 10:02:53 2026 +0800
+
+    Game Lives UI
+
+[33mcommit 283ff7eb7bda07f35ec27f3b3784061a0af507ce[m
+Author: white0429 <ssg950429@gmail.com>
+Date:   Tue Apr 14 20:22:26 2026 +0800
+
+    Game Reset Complete(2)
+
+[33mcommit 42e939b0d2221f38f9604ecb4fd0ad25f58c8d3c[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sun Apr 12 21:31:44 2026 +0800
+
+    Game Reset Complete
+
+[33mcommit 132b2911b0147b7165325367f6c86f80f8536670[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sun Apr 12 15:22:36 2026 +0800
+
+    Game Reset Complete
+
+[33mcommit be7ee773a2f3480365a0e9b6baf71dd35fc7114a[m
+Merge: c312da0 26b84dd
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 28 19:11:54 2026 +0800
+
+    fixed
+
+[33mcommit c312da022005c19abdd15a996514c25d3c880945[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 28 19:06:29 2026 +0800
+
+    none
+
+[33mcommit 26b84ddacad8fe8bdfe489851dbded06c4739f15[m[33m ([m[1;32mmain[m[33m)[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 28 18:16:21 2026 +0800
+
+    none
+
+[33mcommit 2f34143b04852ef3cb89635b875f47f9cf075486[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 28 18:12:06 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost3.0
+
+[33mcommit 608a1ac11edab73fcab2269165b3565cb3e1e236[m
+Merge: a1df0b1 67b9dd1
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 28 18:07:56 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost2.0
+
+[33mcommit 91fb092b9f7094fcde5fbb2be01753ba3f3fe5c9[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Sat Mar 28 15:59:58 2026 +0800
+
+    change pinky and inky location
+
+[33mcommit 2026714e1a446e4cb7fcac775c41a6ee971a3c13[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Sat Mar 28 15:51:16 2026 +0800
+
+    Add directional Pac-Man animations and preserve frame on wall collision
+
+[33mcommit 67b9dd114070d82da0b956bec4886dfd26f723d1[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 20:27:16 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost2.0
+
+[33mcommit a1df0b11f0e63fe3ebcba762f4ab7e706fc66c72[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 20:21:19 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost
+
+[33mcommit 223523f3b64d64e814c8a2b2f15021bed3ebe067[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 20:20:42 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost
+
+[33mcommit 3718900f1adf083f0401da54c7a5531850d0a397[m
+Merge: 972a56a d0faa03
+Author: white0429 <ssg950429@gmail.com>
+Date:   Fri Mar 27 19:58:13 2026 +0800
+
+    Merge pull request #5 from stone2511/structure
+    
+    Blinky_Movement_Logic and Global Timer for Ghost
+
+[33mcommit d0faa03335207cc4aa0561efb18b87ecc9a7b7a5[m
+Merge: 8452313 972a56a
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 19:56:37 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost
+
+[33mcommit 972a56ac2718477b58fd50032d044aa61848e342[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 19:54:55 2026 +0800
+
+    Blinky_Movement_Logic and Global Timer for Ghost
+
+[33mcommit d2b37160ebad7af2d7912f521a2879f127a21ec1[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Fri Mar 27 12:02:53 2026 +0800
+
+    pacman animation
+
+[33mcommit 2fee32b28407ebcbedabeed78399bee6eaba0d97[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Fri Mar 27 11:49:47 2026 +0800
+
+    ghost sort2.0
+
+[33mcommit 29a85077d71e1a467845f46ed8182078d40eb811[m
+Merge: be75e2e b0cd9f7
+Author: white0429 <ssg950429@gmail.com>
+Date:   Fri Mar 27 11:42:27 2026 +0800
+
+    Merge branch 'main' of https://github.com/stone2511/Pac-man
+
+[33mcommit be75e2e39dd637ee150446115ce2233aabac7245[m
+Author: white0429 <ssg950429@gmail.com>
+Date:   Fri Mar 27 11:41:22 2026 +0800
+
+    ghost sort
+
+[33mcommit ae2ffa6acfb549b9f6911b5295b2a367f0a9701a[m
+Author: white0429 <ssg950429@gmail.com>
+Date:   Fri Mar 27 11:39:38 2026 +0800
+
+    ghost sort
+
+[33mcommit b0cd9f799cdab3f1318cff60d6ea7b3113d1c599[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Fri Mar 27 10:54:06 2026 +0800
+
+    tunnel
+
+[33mcommit a441b8ba0f615948f81cce3b3e6fb76b6f44bdeb[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Fri Mar 27 10:19:32 2026 +0800
+
+    direction record
+
+[33mcommit 8452313024ff8b46fe3301e328f9831e609a3681[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 27 10:03:38 2026 +0800
+
+    void
+
+[33mcommit db6c0e78034dac4e1fbdfd625fe7efc5d6d4f5ce[m
+Author: 113590450 <t113590450@ntut.edu.tw>
+Date:   Fri Mar 27 09:43:38 2026 +0800
+
+    Add ghost sprites to map
+
+[33mcommit 04bd6066f2b0694bfcdea42002267f8b080ebeb8[m
+Merge: a2ffea0 ab41028
+Author: SHIH EN-YU <carter950325@gmail.com>
+Date:   Thu Mar 26 21:16:21 2026 +0800
+
+    Merge pull request #4 from stone2511/structure
+    
+    eat and score
+
+[33mcommit ab41028211af04c1c2701fcc2c731c5c02442aed[m
+Merge: 192a49b 2923ac9
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Wed Mar 25 07:42:21 2026 +0800
+
+    Merge branch 'structure' of https://github.com/stone2511/Pac-man into structure
+
+[33mcommit 192a49b077d25be21eedf28a344afb1309d9cd76[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Tue Mar 24 16:33:42 2026 +0800
+
+    score and eat
+
+[33mcommit a2ffea0c7113cd0873ed69c08997af8a406aa482[m
+Merge: 03801b4 2923ac9
+Author: SHIH EN-YU <carter950325@gmail.com>
+Date:   Mon Mar 23 18:39:26 2026 +0800
+
+    Merge pull request #3 from stone2511/structure
+    
+    Structure
+
+[33mcommit 2923ac90e046f324348a48b87ba933d52cb457c0[m
+Merge: 67a0edd 03801b4
+Author: SHIH EN-YU <carter950325@gmail.com>
+Date:   Mon Mar 23 18:36:52 2026 +0800
+
+    Merge pull request #2 from stone2511/main
+    
+    map finished
+
+[33mcommit 67a0edd1c1f238280535500950a3f95a39809abf[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 21 23:40:04 2026 +0800
+
+    door colliding(pacman)
+
+[33mcommit 4adc1f3707f122c5b3ebec353aac45b4b35a91b7[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 21 22:42:45 2026 +0800
+
+    Map texture finished(without door implement)
+
+[33mcommit ac82d5b65e799737ea25968da5944a632adf3bbb[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 21 17:24:43 2026 +0800
+
+    pac man collision detect version1
+
+[33mcommit 03801b415858226196c5b25541711fc6da44ab29[m
+Merge: e9526ad 62cdf99
+Author: SHIH EN-YU <carter950325@gmail.com>
+Date:   Sat Mar 21 15:44:08 2026 +0800
+
+    Merge pull request #1 from stone2511/structure
+    
+    Map Structure and basic movement logic
+
+[33mcommit 62cdf99940927f62f7aef90a7c0dbb63cf6f0624[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Sat Mar 21 02:55:42 2026 +0800
+
+    map_structure plus basic move logic without collision detect
+
+[33mcommit 3ef8305dae12ab3d4a74b53c0e8c1eecc4479f72[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 20 18:02:53 2026 +0800
+
+    move_test_2
+
+[33mcommit ead92ccc56aedf4f70bf167d5f70494351f6bf50[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 20 17:37:32 2026 +0800
+
+    move_test_1
+
+[33mcommit 1fa5739291530ef72178a85995bbcb0cb7d0a5ae[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 20 17:35:52 2026 +0800
+
+    move_test_1
+
+[33mcommit ae0cbd072692606bbaa6d918d311416913185bb9[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 20 17:20:29 2026 +0800
+
+    move_test_1
+
+[33mcommit c862bf68cad6f14b6319695606ad3ee1d0f9c5a6[m
+Author: Your 蔡臣宥 <t113590055@ntut.org.tw>
+Date:   Fri Mar 20 17:11:32 2026 +0800
+
+    move_test_1
+
+[33mcommit e9526addde5c02da39dc61a83ea3fb8c8d317468[m
+Author: Stone <carter950325@gmail.com>
+Date:   Fri Mar 13 11:31:22 2026 +0800
+
+    Initial commit
