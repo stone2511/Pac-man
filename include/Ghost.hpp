@@ -24,8 +24,15 @@ public:
     glm::vec2 GetPosition() const;
 
     void Reset();
+
+    void SetIsActive(bool active);
+
+    bool IsActive() const;
+
 protected:
     glm::vec2 m_SpawnPos;
+
+    bool m_IsActive = false;
 
 protected:
     std::shared_ptr<Util::GameObject> m_GhostObj;

@@ -14,6 +14,20 @@ void GhostManager::Start(const Map& map) {
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos) {
     m_StateTimer += 0.016f; 
+    m_RealseTimer += 0.016f;
+
+    for(size_t i=0 ; i<m_Ghosts.size() ; ++i) {
+        if(!m_Ghosts[i]->IsActive() && m_RealseTimer >= m_Realse[i]){
+            m_Ghosts[i]->SetIsActive(true);
+        }
+
+        if(m_Ghosts[i]->IsActive()){
+            m_Ghosts[i]->Update(map, pacmanPos, m_CurrentState);
+        }
+        else{
+            //todo
+        }
+    }
 
     if (m_CurrentState == GhostState::SCATTER && m_StateTimer >= 7.0f) {
         m_CurrentState = GhostState::CHASE;
@@ -23,10 +37,12 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos) {
         m_CurrentState = GhostState::SCATTER;
         m_StateTimer = 0.0f;
     }
-
+/*
     for (auto& ghost : m_Ghosts) {
         ghost->Update(map, pacmanPos, m_CurrentState); 
     }
+*/
+    
 }
 
 void GhostManager::Draw() {
@@ -38,11 +54,17 @@ void GhostManager::Draw() {
 void GhostManager::Reset(){
     m_CurrentState = GhostState::SCATTER;
     m_StateTimer = 0.0f;
+    m_RealseTimer = 0.0f;
 
+    for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
+        m_Ghosts[i]->Reset();
+        m_Ghosts[i]->SetIsActive(i==0);
+    }
+/*
     for (auto& ghost : m_Ghosts) {
         ghost->Reset();
     }
-    
+*/ 
     
 }
 

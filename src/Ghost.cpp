@@ -20,3 +20,12 @@ glm::vec2 Ghost::GetPosition() const {
 void Ghost::Reset(){
     m_GhostObj->m_Transform.translation = m_SpawnPos;
 }
+
+void Ghost::SetIsActive(bool active) {
+    m_IsActive = active;
+}
+
+bool Ghost::IsActive() const {
+    return m_IsActive;
+}
+
