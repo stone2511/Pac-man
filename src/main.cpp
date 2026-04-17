@@ -23,6 +23,10 @@ int main(int, char**) {
             case App::State::DEAD:
                 app.Dead();
                 break;
+            
+            case App::State::GAMEOVER:
+                app.Gameover();
+                break;
 
             case App::State::END:
                 app.End();

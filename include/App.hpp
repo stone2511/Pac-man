@@ -19,6 +19,7 @@ public:
         UPDATE,
         RESET,
         DEAD,
+        GAMEOVER,
         END,
     };
 
@@ -32,6 +33,8 @@ public:
 
     void Dead();
 
+    void Gameover();
+
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:
@@ -41,10 +44,13 @@ private:
 
     void DrawDead();
 
+    void DrawGameover();
+
 private:
     State m_CurrentState = State::START;
     std::shared_ptr<Util::GameObject> m_GameText;
     int points = 0;
+    float GameOverTimer = 0.0f;
 
     Map m_Map;
     Pacman m_Pacman;
