@@ -43,8 +43,15 @@ public:
                          const std::vector<glm::vec2>& exitPath);
 
     void Reset();
+
+    void SetIsActive(bool active);
+
+    bool IsActive() const;
+
 protected:
     glm::vec2 m_SpawnPos;
+
+    bool m_IsActive = false;
 
 protected:
     // 讓隨機移動的鬼怪直接重用共用流程，之後 Week 11 可以再換成更進階 AI。
