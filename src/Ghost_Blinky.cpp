@@ -45,7 +45,7 @@ void Ghost_Blinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
 
     //1. Decision time
 
-    if(std::abs(pos.x - gridCenter.x)< 3.0f && std::abs(pos.y - gridCenter.y) < 3.0f) {
+    if(std::abs(pos.x - gridCenter.x)< m_Speed && std::abs(pos.y - gridCenter.y) < m_Speed) {
         
         pos = gridCenter;
 
