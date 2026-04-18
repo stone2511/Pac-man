@@ -12,17 +12,18 @@ void GhostManager::Start(const Map& map) {
     m_Ghosts.push_back(std::make_shared<Ghost_Clyde>(map.GridToWorld(11.1f, 9.0f)));
 }
 
-void GhostManager::Update(const Map& map, glm::vec2 pacmanPos) {
+void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir) {
     m_StateTimer += 0.016f; 
     m_RealseTimer += 0.016f;
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i) {
         if(!m_Ghosts[i]->IsActive() && m_RealseTimer >= m_Realse[i]){
             m_Ghosts[i]->SetIsActive(true);
+            m_Ghosts[i]->SetHouseState(HouseState::EXITING);
         }
 
         if(m_Ghosts[i]->IsActive()){
-            m_Ghosts[i]->Update(map, pacmanPos, m_CurrentState);
+            m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, m_CurrentState);
         }
         else{
             //todo

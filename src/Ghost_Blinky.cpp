@@ -6,8 +6,31 @@ Ghost_Blinky::Ghost_Blinky(glm::vec2 worldPos)
     : Ghost(RESOURCE_DIR"/Image/ghost/blinky0.png", worldPos) {
 }
 
-void Ghost_Blinky::Update(const Map& map, glm::vec2 pacmanPos, GhostState state) {
+void Ghost_Blinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, GhostState state) {
     auto pos = m_GhostObj->m_Transform.translation;
+
+    if(m_HouseState == HouseState::EXITING){
+        glm::vec2 doorPos = map.GridToWorld(10,7);
+        float exitSpeed = 2.0f;
+
+        if(std::abs(pos.x - doorPos.x) > exitSpeed){
+            pos.x += (pos.x < doorPos.x) ? exitSpeed : -exitSpeed;
+        }
+        else{
+            pos.x = doorPos.x;
+            if(std::abs(pos.y - doorPos.y) > exitSpeed){
+                pos.y += (pos.y < doorPos.y) ? exitSpeed : -exitSpeed;
+            }
+            else{
+                pos.y = doorPos.y;
+                m_HouseState = HouseState::OUTSIDE;
+                m_CurrentDir = Direction::LEFT;
+            }
+        }
+
+        m_GhostObj->m_Transform.translation = pos;
+        return;
+    }
 
     glm::vec2 gridCenter = map.GetClosestGridCenter(pos.x, pos.y);
 

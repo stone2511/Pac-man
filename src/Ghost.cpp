@@ -29,3 +29,11 @@ bool Ghost::IsActive() const {
     return m_IsActive;
 }
 
+void Ghost::SetHouseState(HouseState s) {
+    m_HouseState = s;
+}
+
+HouseState Ghost::GetHouseState() const{
+    return m_HouseState;
+}
+

@@ -27,13 +27,14 @@ void App::Update() {
     
     //Draw the map
     m_Map.Draw();
+    //Draw the scoreboard
+    m_Scoreboard.Draw();
     //Draw the pacman
     m_Pacman.Draw();
     //Draw the Ghost
-    m_GhostManager.Update(m_Map, m_Pacman.GetPosition());
+    m_GhostManager.Update(m_Map, m_Pacman.GetPosition(), m_Pacman.GetDirection());
     m_GhostManager.Draw();
-    //Draw the scoreboard
-    m_Scoreboard.Draw();
+    
     
 
     points = m_Pacman.Update(m_Map);
@@ -65,6 +66,7 @@ void App::Reset() {
 
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
         m_Scoreboard.NextLevel();
+        m_Scoreboard.ResetLives();
         m_Map.ResetData();
         m_Pacman.Reset();
         m_GhostManager.Reset();
