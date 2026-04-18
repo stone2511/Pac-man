@@ -8,7 +8,7 @@ class Ghost_Blinky : public Ghost {
 public:
     explicit Ghost_Blinky(glm::vec2 worldPos);
 
-    void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, GhostState state) override;
+    void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) override;
 
 private:
     

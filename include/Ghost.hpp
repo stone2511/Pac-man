@@ -26,7 +26,7 @@ public:
     Ghost(const std::string& texturePath, glm::vec2 worldPos);
     virtual ~Ghost() = default;
 
-    virtual void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, GhostState state) = 0; 
+    virtual void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) = 0; 
     
     void Draw();
     glm::vec2 GetPosition() const;

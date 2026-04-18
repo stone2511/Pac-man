@@ -16,6 +16,8 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
     m_StateTimer += 0.016f; 
     m_RealseTimer += 0.016f;
 
+    glm::vec2 blinkyPos = m_Ghosts[0]->GetPosition();
+
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i) {
         if(!m_Ghosts[i]->IsActive() && m_RealseTimer >= m_Realse[i]){
             m_Ghosts[i]->SetIsActive(true);
@@ -23,7 +25,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
         }
 
         if(m_Ghosts[i]->IsActive()){
-            m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, m_CurrentState);
+            m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, blinkyPos, m_CurrentState);
         }
         else{
             //todo

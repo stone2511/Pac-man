@@ -5,7 +5,7 @@ Ghost_Pinky::Ghost_Pinky(glm::vec2 worldPos)
     : Ghost(RESOURCE_DIR"/Image/ghost/pinky0.png", worldPos) {
 }
 
-void Ghost_Pinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, GhostState state) {
+void Ghost_Pinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) {
     auto pos = m_GhostObj->m_Transform.translation;
 
     //出門邏輯
@@ -42,13 +42,13 @@ void Ghost_Pinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDi
         targetPos = pacmanPos;
         
         if(pacmanDir == Direction::UP) {targetPos.y+=offset;}
-        if(pacmanDir == Direction::DOWN) {targetPos.y-=offset;}
-        if(pacmanDir == Direction::LEFT) {targetPos.x-=offset;}
-        if(pacmanDir == Direction::RIGHT) {targetPos.x+=offset;}
+        else if(pacmanDir == Direction::DOWN) {targetPos.y-=offset;}
+        else if(pacmanDir == Direction::LEFT) {targetPos.x-=offset;}
+        else if(pacmanDir == Direction::RIGHT) {targetPos.x+=offset;}
             
     } 
     else if (state == GhostState::SCATTER) {
-        targetPos = glm::vec2(999.0f, -999.0f); 
+        targetPos = glm::vec2(-999.0f, 999.0f); 
     }
 
     //1. Decision time
