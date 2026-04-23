@@ -34,8 +34,9 @@ public:
     void Reset();
 
     void SetIsActive(bool active);
-
     bool IsActive() const;
+    void SetVisible(bool visible);
+    bool IsVisible() const;
 
     void SetHouseState(HouseState s);
     HouseState GetHouseState() const;

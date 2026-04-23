@@ -55,10 +55,18 @@ void GhostManager::Draw() {
     }
 }
 
+//一次設定所有鬼的顯示狀態，死亡流程在 0.5s 到時直接呼叫它，把全部鬼隱藏。
+void GhostManager::SetVisible(bool visible) {
+    for (auto& ghost : m_Ghosts) {
+        ghost->SetVisible(visible);
+    }
+}
+
 void GhostManager::Reset(){
     m_CurrentState = GhostState::SCATTER;
     m_StateTimer = 0.0f;
     m_ReleaseTimer = 0.0f;
+    SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
         m_Ghosts[i]->Reset();
@@ -76,6 +84,11 @@ bool GhostManager::CheckCollision(glm::vec2 pacmanPos) const {
     float death_radius = 18.0f;
 
     for (const auto& ghost : m_Ghosts){
+        //檢查 Pacman 是否碰到任何鬼。只會檢查「已啟用而且可見」的鬼，所以鬼消失後不會再重複判定碰撞。
+        if (!ghost->IsActive() || !ghost->IsVisible()) {
+            continue;
+        }
+
         float distance = glm::distance(pacmanPos, ghost->GetPosition());
 
         if(distance < death_radius){

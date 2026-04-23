@@ -4,6 +4,7 @@
 #include "Util/Input.hpp"
 #include "Util/Keycode.hpp"
 #include "Util/Logger.hpp"
+#include "Util/Time.hpp"
 
 void App::Start() {
     LOG_TRACE("Start");
@@ -19,8 +20,35 @@ void App::Start() {
 
     //Init Scoreboard
     m_Scoreboard.Start();
+    ResetDeathSequence();
 
     m_CurrentState = State::UPDATE;
+}
+
+//讓 DYING 狀態下也能繼續畫當前畫面，但不做移動更新。死亡流程的細節在 App::Dying() 中實作。
+void App::DrawGameplay() {
+    m_Map.Draw();
+    m_Scoreboard.Draw();
+    m_Pacman.Draw();
+    m_GhostManager.Draw();
+}
+
+//清掉死亡計時器、重設旗標、確保鬼先顯示、暫停 Pacman 動畫，然後切到 DYING。
+void App::StartDeathSequence() {
+    m_DeathSequenceTimer = 0.0f;
+    m_HasHiddenGhosts = false;
+    m_HasStartedDeathAnimation = false;
+    m_GhostManager.SetVisible(true);
+    m_Pacman.PauseAnimation();
+    m_CurrentState = State::DYING;
+}
+
+//把死亡前置流程的計時器與旗標清回初始值。
+void App::ResetDeathSequence() {
+    m_DeathSequenceTimer = 0.0f;
+    m_HasHiddenGhosts = false;
+    m_HasStartedDeathAnimation = false;
+    m_GhostManager.SetVisible(true);
 }
 
 void App::Update() {
@@ -47,12 +75,37 @@ void App::Update() {
     }
 
     else if (m_GhostManager.CheckCollision(m_Pacman.GetPosition())){
-        m_CurrentState = State::DEAD;
+        StartDeathSequence();
     }
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.
      */
+    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
+        Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+    }
+}
+
+void App::Dying() {
+    m_DeathSequenceTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
+
+    if (!m_HasHiddenGhosts && m_DeathSequenceTimer >= 0.5f) {
+        m_GhostManager.SetVisible(false);
+        m_HasHiddenGhosts = true;
+    }
+
+    if (!m_HasStartedDeathAnimation && m_DeathSequenceTimer >= 1.0f) {
+        m_Pacman.StartDeathAnimation();
+        m_HasStartedDeathAnimation = true;
+    }
+
+    DrawGameplay();
+
+    if (m_HasStartedDeathAnimation && m_Pacman.IsDeathAnimationFinished()) {
+        m_CurrentState = State::DEAD;
+    }
+
     if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
         Util::Input::IfExit()) {
         m_CurrentState = State::END;
@@ -70,6 +123,7 @@ void App::Reset() {
         m_Map.ResetData();
         m_Pacman.Reset();
         m_GhostManager.Reset();
+        ResetDeathSequence();//避免下一命延續舊狀態。
         m_CurrentState = State::UPDATE;     
     }
 }
@@ -86,6 +140,7 @@ void App::Dead() {
         m_Scoreboard.MinusLives();
         m_Pacman.Reset();
         m_GhostManager.Reset();
+        ResetDeathSequence();
         m_CurrentState = State::UPDATE;
     }
 }

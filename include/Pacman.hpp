@@ -14,6 +14,9 @@ public:
     int Update(Map& map);    //Movement and behavior
     void Animate();
     void Draw();    //Draw
+    void PauseAnimation();
+    void StartDeathAnimation();
+    bool IsDeathAnimationFinished() const;
     void Reset();
 
     glm::vec2 GetPosition() const;
@@ -28,6 +31,7 @@ private:
     std::shared_ptr<Util::Animation> m_DownAnimation;
     std::shared_ptr<Util::Animation> m_LeftAnimation;
     std::shared_ptr<Util::Animation> m_RightAnimation;
+    std::shared_ptr<Util::Animation> m_DeathAnimation;
     std::shared_ptr<Util::Animation> m_CurrentAnimation;
 
     //Pacman Speed

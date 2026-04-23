@@ -6,7 +6,7 @@ Ghost::Ghost(const std::string& texturePath, glm::vec2 worldPos) {
     m_GhostObj->SetDrawable(std::make_shared<Util::Image>(texturePath));
     m_SpawnPos = worldPos;
     m_GhostObj->m_Transform.translation = m_SpawnPos;
-    m_GhostObj->SetZIndex(5);
+    m_GhostObj->SetZIndex(15);
 }
 
 void Ghost::Draw() {
@@ -29,6 +29,16 @@ bool Ghost::IsActive() const {
     return m_IsActive;
 }
 
+//控制這隻鬼要不要顯示在畫面上。讓死亡流程中可以統一把鬼隱藏。
+void Ghost::SetVisible(bool visible) {
+    m_GhostObj->SetVisible(visible);
+}
+
+//回傳鬼目前是不是可見，讓碰撞檢查時能忽略已經消失的鬼。
+bool Ghost::IsVisible() const {
+    return m_GhostObj->GetVisible();
+}
+
 void Ghost::SetHouseState(HouseState s) {
     m_HouseState = s;
 }
@@ -36,4 +46,3 @@ void Ghost::SetHouseState(HouseState s) {
 HouseState Ghost::GetHouseState() const{
     return m_HouseState;
 }
-

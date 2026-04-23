@@ -12,6 +12,7 @@ public:
     void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir);
     void Draw();
     void Reset();
+    void SetVisible(bool visible);
 
     bool CheckCollision(glm::vec2 pacmanPos) const;
 

@@ -18,6 +18,7 @@ public:
         START,
         UPDATE,
         RESET,
+        DYING,
         DEAD,
         GAMEOVER,
         END,
@@ -32,6 +33,8 @@ public:
 
     void Reset();   //遊戲的重置
 
+    void Dying();   //死亡前置動畫
+
     void Dead();    //死亡
 
     void Gameover();    //遊戲結束
@@ -39,6 +42,9 @@ public:
     void End(); // NOLINT(readability-convert-member-functions-to-static)
 
 private:
+    void DrawGameplay();
+    void StartDeathSequence();
+    void ResetDeathSequence();
     void ValidTask();
 
     void DrawVictory(); //勝利字串
@@ -55,6 +61,9 @@ private:
     //分數和計時器
     int points = 0;
     float GameOverTimer = 0.0f;
+    float m_DeathSequenceTimer = 0.0f;
+    bool m_HasHiddenGhosts = false;
+    bool m_HasStartedDeathAnimation = false;
 
     //成員呼叫
     Map m_Map;
