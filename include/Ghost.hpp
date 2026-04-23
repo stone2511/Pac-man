@@ -65,6 +65,7 @@ protected:
     bool m_IsActive = false;
 
     HouseState m_HouseState = HouseState::IN_HOUSE;
+
 protected:
     // 讓隨機移動的鬼怪直接重用共用流程，之後 Week 11 可以再換成更進階 AI。
     void UpdateRandomMovement(const Map& map);

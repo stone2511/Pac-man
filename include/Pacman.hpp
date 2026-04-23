@@ -23,6 +23,7 @@ private:
     
     std::shared_ptr<Util::GameObject> m_Pacman;
 
+    //動畫
     std::shared_ptr<Util::Animation> m_UpAnimation;
     std::shared_ptr<Util::Animation> m_DownAnimation;
     std::shared_ptr<Util::Animation> m_LeftAnimation;

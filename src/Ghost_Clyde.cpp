@@ -9,7 +9,27 @@ void Ghost_Clyde::Update(const Map& map, glm::vec2 pacmanPos, GhostState state) 
     (void)pacmanPos;
     (void)state;
 
-    if (UpdateHouseRelease()) {
+    //出門邏輯
+    if(m_HouseState == HouseState::EXITING){
+        glm::vec2 doorPos = map.GridToWorld(10,7);
+        float exitSpeed = 2.0f;
+
+        if(std::abs(pos.x - doorPos.x) > exitSpeed){
+            pos.x += (pos.x < doorPos.x) ? exitSpeed : -exitSpeed;
+        }
+        else{
+            pos.x = doorPos.x;
+            if(std::abs(pos.y - doorPos.y) > exitSpeed){
+                pos.y += (pos.y < doorPos.y) ? exitSpeed : -exitSpeed;
+            }
+            else{
+                pos.y = doorPos.y;
+                m_HouseState = HouseState::OUTSIDE;
+                m_CurrentDir = Direction::LEFT;
+            }
+        }
+
+        m_GhostObj->m_Transform.translation = pos;
         return;
     }
 
