@@ -8,6 +8,7 @@ Ghost_Clyde::Ghost_Clyde(glm::vec2 worldPos)
 void Ghost_Clyde::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) {
     auto pos = m_GhostObj->m_Transform.translation;
 
+    //出門邏輯
     if(m_HouseState == HouseState::EXITING){
         glm::vec2 doorPos = map.GridToWorld(10,7);
         float exitSpeed = 2.0f;

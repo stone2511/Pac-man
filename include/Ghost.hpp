@@ -46,6 +46,7 @@ protected:
     bool m_IsActive = false;
 
     HouseState m_HouseState = HouseState::IN_HOUSE;
+
 protected:
     std::shared_ptr<Util::GameObject> m_GhostObj;
     float m_Speed = 2.0f;

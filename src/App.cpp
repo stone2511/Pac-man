@@ -81,6 +81,7 @@ void App::Dead() {
     DrawDead();
     m_GameText->Draw();
 
+    //死亡不重置地圖
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
         m_Scoreboard.MinusLives();
         m_Pacman.Reset();
@@ -95,6 +96,8 @@ void App::Gameover() {
 
     GameOverTimer+=0.016f;
 
+    //1/60=0.016
+    //差不多兩秒
     if(GameOverTimer > 2.0f){
         m_CurrentState = State::END;
     }
@@ -123,7 +126,7 @@ void App::DrawDead() {
 }
 
 void App::DrawGameover(){
-     m_GameText = std::make_shared<Util::GameObject>();
+    m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
         50, 

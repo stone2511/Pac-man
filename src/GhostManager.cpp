@@ -32,6 +32,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
         }
     }
 
+    //7秒Scatter狀態20秒Chase狀態
     if (m_CurrentState == GhostState::SCATTER && m_StateTimer >= 7.0f) {
         m_CurrentState = GhostState::CHASE;
         m_StateTimer = 0.0f;
