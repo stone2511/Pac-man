@@ -9,7 +9,7 @@
 class GhostManager {
 public:
     void Start(const Map& map);
-    void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir);
+    void Update(const Map& map, glm::vec2 pacmanPos);
     void Draw();
     void Reset();
 

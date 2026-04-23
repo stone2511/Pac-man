@@ -43,18 +43,18 @@ int Pacman::Update(Map& map) {
     auto pos = m_Pacman->m_Transform.translation;
 
     if (Util::Input::IsKeyDown(Util::Keycode::W)) {
-        m_QueuedDirection = Direction::UP;
+        m_QueuedDirection = Direction::Up;
     } else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
-        m_QueuedDirection = Direction::DOWN;
+        m_QueuedDirection = Direction::Down;
     } else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
-        m_QueuedDirection = Direction::LEFT;
+        m_QueuedDirection = Direction::Left;
     } else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
-        m_QueuedDirection = Direction::RIGHT;
+        m_QueuedDirection = Direction::Right;
     }
 
     // Turn as soon as the requested direction becomes available.
     const auto queuedPos = pos + GetDirectionOffset(m_QueuedDirection);
-    if (m_QueuedDirection != Direction::NONE &&
+    if (m_QueuedDirection != Direction::None &&
         !IsColliding(map, queuedPos)) {
         m_CurrentDirection = m_QueuedDirection;
     }
@@ -63,7 +63,7 @@ int Pacman::Update(Map& map) {
     auto nextPos = pos + GetDirectionOffset(m_CurrentDirection);
     map.TryWrapTunnel(nextPos, 14.0f);
     bool didMove = false;
-    if (m_CurrentDirection != Direction::NONE &&
+    if (m_CurrentDirection != Direction::None &&
         !IsColliding(map, nextPos)) {
         pos = nextPos;
         didMove = true;
@@ -84,8 +84,8 @@ void Pacman::Draw() {
 
 void Pacman::Reset(){
     m_Pacman->m_Transform.translation = {0.0f, -160.0f};
-    m_CurrentDirection = Direction::NONE;
-    m_QueuedDirection = Direction::NONE;
+    m_CurrentDirection = Direction::None;
+    m_QueuedDirection = Direction::None;
 }
 
 bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
@@ -108,15 +108,15 @@ bool Pacman::IsColliding(Map& map, glm::vec2 pos) {
 
 glm::vec2 Pacman::GetDirectionOffset(Direction direction) const {
     switch (direction) {
-        case Direction::UP:
+        case Direction::Up:
             return {0.0f, m_Speed};
-        case Direction::DOWN:
+        case Direction::Down:
             return {0.0f, -m_Speed};
-        case Direction::LEFT:
+        case Direction::Left:
             return {-m_Speed, 0.0f};
-        case Direction::RIGHT:
+        case Direction::Right:
             return {m_Speed, 0.0f};
-        case Direction::NONE:
+        case Direction::None:
         default:
             return {0.0f, 0.0f};
     }
@@ -124,14 +124,14 @@ glm::vec2 Pacman::GetDirectionOffset(Direction direction) const {
 
 std::shared_ptr<Util::Animation> Pacman::GetAnimation(Direction direction) const {
     switch (direction) {
-        case Direction::UP:
+        case Direction::Up:
             return m_UpAnimation;
-        case Direction::DOWN:
+        case Direction::Down:
             return m_DownAnimation;
-        case Direction::LEFT:
+        case Direction::Left:
             return m_LeftAnimation;
-        case Direction::RIGHT:
-        case Direction::NONE:
+        case Direction::Right:
+        case Direction::None:
         default:
             return m_RightAnimation;
     }
@@ -154,8 +154,4 @@ void Pacman::UpdateAnimation(bool isMoving) {
 
 glm::vec2 Pacman::GetPosition() const {
     return m_Pacman->m_Transform.translation;
-}
-
-Direction Pacman::GetDirection() const {
-    return m_CurrentDirection;
 }

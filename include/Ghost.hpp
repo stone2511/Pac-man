@@ -4,7 +4,6 @@
 #include "pch.hpp"
 #include "Util/GameObject.hpp"
 #include "Map.hpp"
-#include "Direction.hpp"
 #include <memory>
 #include <random>
 #include <string>
@@ -15,13 +14,6 @@ enum class GhostState {
         CHASE,
         FRIGHTENED
 };
-
-enum class HouseState {
-        IN_HOUSE,
-        EXITING,
-        OUTSIDE
-};
-
 
 class Ghost {
 public:
@@ -39,7 +31,7 @@ public:
           glm::vec2 worldPos);
     virtual ~Ghost() = default;
 
-    virtual void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) = 0; 
+    virtual void Update(const Map& map, glm::vec2 pacmanPos, GhostState state) = 0; 
     
     void Draw();
     glm::vec2 GetPosition() const;
@@ -56,15 +48,11 @@ public:
 
     bool IsActive() const;
 
-    void SetHouseState(HouseState s);
-    HouseState GetHouseState() const;
-
 protected:
     glm::vec2 m_SpawnPos;
 
     bool m_IsActive = false;
 
-    HouseState m_HouseState = HouseState::IN_HOUSE;
 protected:
     // 讓隨機移動的鬼怪直接重用共用流程，之後 Week 11 可以再換成更進階 AI。
     void UpdateRandomMovement(const Map& map);

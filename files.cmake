@@ -22,7 +22,6 @@ set(INCLUDE_FILES
     Ghost_Clyde.hpp
     GhostManager.hpp
     Ghost.hpp
-    Direction.hpp
 )
 
 set(TEST_FILES

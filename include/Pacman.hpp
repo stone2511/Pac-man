@@ -5,7 +5,6 @@
 #include "Util/GameObject.hpp"
 #include "Util/Animation.hpp"
 #include "Map.hpp"
-#include "Direction.hpp"
 #include <memory>
 
 class Pacman {
@@ -17,10 +16,16 @@ public:
     void Reset();
 
     glm::vec2 GetPosition() const;
-    Direction GetDirection() const;
 
 private:
-    
+    enum class Direction {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
     std::shared_ptr<Util::GameObject> m_Pacman;
 
     std::shared_ptr<Util::Animation> m_UpAnimation;
@@ -32,9 +37,9 @@ private:
     //Pacman Speed
     float m_Speed = 4.0f;
 
-    Direction m_CurrentDirection = Direction::NONE;
-    Direction m_QueuedDirection = Direction::NONE;
-    Direction m_FacingDirection = Direction::RIGHT;
+    Direction m_CurrentDirection = Direction::None;
+    Direction m_QueuedDirection = Direction::None;
+    Direction m_FacingDirection = Direction::Right;
 
     //Colliging Detect
     bool IsColliding(Map& map, glm::vec2 pos);
