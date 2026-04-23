@@ -3,13 +3,36 @@
 #include "Ghost_Pinky.hpp"
 #include "Ghost_Inky.hpp"
 #include "Ghost_Clyde.hpp"
+#include "Util/Time.hpp"
 
 void GhostManager::Start(const Map& map) {
     m_Ghosts.clear();
-    m_Ghosts.push_back(std::make_shared<Ghost_Blinky>(map.GridToWorld(10.0f, 7.0f)));
-    m_Ghosts.push_back(std::make_shared<Ghost_Pinky>(map.GridToWorld(10.0f, 9.0f)));
-    m_Ghosts.push_back(std::make_shared<Ghost_Inky>(map.GridToWorld(8.9f, 9.0f)));
-    m_Ghosts.push_back(std::make_shared<Ghost_Clyde>(map.GridToWorld(11.1f, 9.0f)));
+    m_CurrentState = GhostState::SCATTER;
+    m_StateTimer = 0.0f;
+
+    auto blinky = std::make_shared<Ghost_Blinky>(map.GridToWorld(10.0f, 7.0f));
+    auto pinky = std::make_shared<Ghost_Pinky>(map.GridToWorld(10.0f, 9.0f));
+    auto inky = std::make_shared<Ghost_Inky>(map.GridToWorld(9.0f, 9.0f));
+    auto clyde = std::make_shared<Ghost_Clyde>(map.GridToWorld(11.0f, 9.0f));
+
+    pinky->SetHouseRelease(10.0f, {
+        map.GridToWorld(10.0f, 7.0f)
+    });
+
+    inky->SetHouseRelease(20.0f, {
+        map.GridToWorld(10.0f, 9.0f),
+        map.GridToWorld(10.0f, 7.0f)
+    });
+
+    clyde->SetHouseRelease(30.0f, {
+        map.GridToWorld(10.0f, 9.0f),
+        map.GridToWorld(10.0f, 7.0f)
+    });
+
+    m_Ghosts.push_back(blinky);
+    m_Ghosts.push_back(pinky);
+    m_Ghosts.push_back(inky);
+    m_Ghosts.push_back(clyde);
 }
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir) {
