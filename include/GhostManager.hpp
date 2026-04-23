@@ -22,10 +22,10 @@ private:
 
     //Timer
     float m_StateTimer = 0.0f;
-    float m_RealseTimer = 0.0f;
+    float m_ReleaseTimer = 0.0f;
 
     //鬼的釋放時間
-    const std::vector<float> m_Re alse = {0.0f, 5.0f, 10.0f, 15.0f};
+    const std::vector<float> m_Release = {0.0f, 5.0f, 10.0f, 15.0f};
 };
 
 #endif

@@ -14,12 +14,12 @@ void GhostManager::Start(const Map& map) {
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir) {
     m_StateTimer += 0.016f; 
-    m_RealseTimer += 0.016f;
+    m_ReleaseTimer += 0.016f;
 
     glm::vec2 blinkyPos = m_Ghosts[0]->GetPosition();
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i) {
-        if(!m_Ghosts[i]->IsActive() && m_RealseTimer >= m_Realse[i]){
+        if(!m_Ghosts[i]->IsActive() && m_ReleaseTimer >= m_Release[i]){
             m_Ghosts[i]->SetIsActive(true);
             m_Ghosts[i]->SetHouseState(HouseState::EXITING);
         }
@@ -58,7 +58,7 @@ void GhostManager::Draw() {
 void GhostManager::Reset(){
     m_CurrentState = GhostState::SCATTER;
     m_StateTimer = 0.0f;
-    m_RealseTimer = 0.0f;
+    m_ReleaseTimer = 0.0f;
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
         m_Ghosts[i]->Reset();
@@ -85,4 +85,3 @@ bool GhostManager::CheckCollision(glm::vec2 pacmanPos) const {
     
     return false;
 }
-
