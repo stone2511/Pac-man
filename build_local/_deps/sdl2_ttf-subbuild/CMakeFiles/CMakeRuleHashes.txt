@@ -1,0 +1,11 @@
+# Hashes of file build rules.
+34464339b52776d1c568f71eb505ba78 CMakeFiles/sdl2_ttf-populate
+633b23b3837338810d50b55acef7795d CMakeFiles/sdl2_ttf-populate-complete
+a36a92e58ab15d2902f8f4506804bd07 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-build
+e8f83960b0f8696dc2354d1cfcf71ee7 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-configure
+09e662083083dc7b5792f76532073a45 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-download
+9d8e0522f825dcdf90db582255b7eb03 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-install
+547f0ce001ac2a748d1057f6ff79d87d sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-mkdir
+e799edc5452db440eaee898509fdd4a1 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-patch
+9c41b47a9d9ddc1cc18c6c66ced8e36c sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-test
+b72c65305e318424ffe228a32543f248 sdl2_ttf-populate-prefix/src/sdl2_ttf-populate-stamp/sdl2_ttf-populate-update

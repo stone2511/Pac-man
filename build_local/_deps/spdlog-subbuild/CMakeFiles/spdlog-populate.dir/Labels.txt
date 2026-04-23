@@ -1,0 +1,14 @@
+# Target labels
+ spdlog-populate
+# Source files and their labels
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate-complete.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-build.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-configure.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-download.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-install.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-mkdir.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-patch.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-test.rule
+/Users/carter/Pac-man/build_local/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/spdlog-populate-update.rule
