@@ -5,7 +5,13 @@ Ghost_Clyde::Ghost_Clyde(glm::vec2 worldPos)
     : Ghost("Clyde", RESOURCE_DIR"/Image/ghost/clyde0.png", 'C', worldPos) {
 }
 
-void Ghost_Clyde::Update(const Map& map, glm::vec2 pacmanPos, GhostState state) {
+void Ghost_Clyde::Update(const Map& map,
+                         glm::vec2 pacmanPos,
+                         Direction pacmanDir,
+                         glm::vec2 blinkyPos,
+                         GhostState state) {
+    (void)pacmanDir;
+    (void)blinkyPos;
     (void)pacmanPos;
     (void)state;
 

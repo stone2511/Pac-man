@@ -29,6 +29,10 @@ glm::vec2 Ghost::GetPosition() const {
 
 void Ghost::Reset(){
     m_GhostObj->m_Transform.translation = m_SpawnPos;
+    m_CurrentDir = Direction::LEFT;
+    m_ReleaseTimer = 0.0f;
+    m_CurrentExitTarget = 0;
+    m_IsReleased = m_HouseExitPath.empty();
 }
 const std::string& Ghost::GetName() const {
     return m_Name;
@@ -38,7 +42,7 @@ char Ghost::GetDisplaySymbol() const {
     return m_DisplaySymbol;
 }
 
-Ghost::Direction Ghost::GetCurrentDirection() const {
+Direction Ghost::GetCurrentDirection() const {
     return m_CurrentDir;
 }
 
@@ -206,7 +210,7 @@ glm::vec2 Ghost::GetTileOffset(Direction direction) const {
     }
 }
 
-std::vector<Ghost::Direction> Ghost::GetAvailableDirections(
+std::vector<Direction> Ghost::GetAvailableDirections(
     const Map& map,
     glm::vec2 centerPos,
     bool allowReverse) const {
@@ -234,7 +238,7 @@ std::vector<Ghost::Direction> Ghost::GetAvailableDirections(
     return directions;
 }
 
-Ghost::Direction Ghost::PickRandomDirection(
+Direction Ghost::PickRandomDirection(
     const std::vector<Direction>& directions) {
     if (directions.empty()) {
         return Direction::NONE;
@@ -246,7 +250,7 @@ Ghost::Direction Ghost::PickRandomDirection(
     return directions[distribution(m_Rng)];
 }
 
-Ghost::Direction Ghost::GetOppositeDirection(Direction direction) const {
+Direction Ghost::GetOppositeDirection(Direction direction) const {
     switch (direction) {
         case Direction::UP:
             return Direction::DOWN;
