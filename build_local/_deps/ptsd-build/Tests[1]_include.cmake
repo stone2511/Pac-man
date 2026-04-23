@@ -1,5 +1,0 @@
-if(EXISTS "/Users/carter/Pac-man/build_local/_deps/ptsd-build/Tests[1]_tests.cmake")
-  include("/Users/carter/Pac-man/build_local/_deps/ptsd-build/Tests[1]_tests.cmake")
-else()
-  add_test(Tests_NOT_BUILT Tests_NOT_BUILT)
-endif()
