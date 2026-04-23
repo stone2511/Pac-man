@@ -79,4 +79,10 @@ int Scoreboard::GetLives(){
 
 void Scoreboard::ResetLives(){
     m_Lives = 3;
+    m_LivesText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf", 
+        40, 
+        "Lives: " + std::to_string(m_Lives), 
+        Util::Color::FromName(Util::Colors::WHITE)
+    ));
 }

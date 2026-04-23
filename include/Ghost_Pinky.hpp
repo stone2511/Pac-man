@@ -8,7 +8,12 @@ class Ghost_Pinky : public Ghost {
 public:
     explicit Ghost_Pinky(glm::vec2 worldPos);
 
-    void Update(const Map& map, glm::vec2 pacmanPos, GhostState state) override; 
+    void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) override; 
+
+private:
+    
+    //bool key =  false;
+    Direction m_CurrentDir = Direction::LEFT;
 };
 
 #endif
