@@ -59,7 +59,6 @@ private:
     std::shared_ptr<Util::GameObject> m_GameText;
 
     //分數和計時器
-    int points = 0;
     float GameOverTimer = 0.0f;
     float m_DeathSequenceTimer = 0.0f;
     bool m_HasHiddenGhosts = false;

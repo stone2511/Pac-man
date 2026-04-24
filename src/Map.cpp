@@ -33,7 +33,7 @@ void Map::Start() {
         {1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1},
         {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
         {1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1},
-        {1, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1},
+        {1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 1},
         {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
     };
 
@@ -185,11 +185,12 @@ glm::vec2 Map::GridToWorld(float gridX, float gridY) const {
 }
 
 bool Map::IsLevelClear() const { 
-    return m_dots.empty();
+    return m_dots.empty() && m_dotplus.empty();
 }
 
 void Map::ResetData(){
     m_dots.clear();
+    m_dotplus.clear();
 
     for (int y = 0; y < m_Level.size(); y++) {
         for (int x = 0; x < m_Level[y].size(); x++) {
@@ -203,12 +204,22 @@ void Map::ResetData(){
                 
                 m_dots.push_back(dot);
             }
+            else if (m_Level[y][x] == 3) {
+                auto dotplus = std::make_shared<Util::GameObject>();
+
+                dotplus->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dotplus.png"));
+
+                dotplus->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                dotplus->SetZIndex(0);
+
+                m_dotplus.push_back(dotplus);
+            }
         }
     }
 }
 
-int Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
-    int scoreToGive = 0;
+BeanEatResult Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
+    BeanEatResult result;
     float eatRadius = 15.0f;
 
     for (auto it = m_dots.begin(); it != m_dots.end(); ) {
@@ -219,13 +230,28 @@ int Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
 
         if (distX < eatRadius && distY < eatRadius) {
             it = m_dots.erase(it); 
-            scoreToGive += 10;
+            result.score += 10;
         } else {
             ++it; 
         }
     }
-    
-    return scoreToGive;
+
+    for (auto it = m_dotplus.begin(); it != m_dotplus.end(); ) {
+        glm::vec2 dotPos = (*it)->m_Transform.translation;
+
+        float distX = std::abs(pacmanPos.x - dotPos.x);
+        float distY = std::abs(pacmanPos.y - dotPos.y);
+
+        if (distX < eatRadius && distY < eatRadius) {
+            it = m_dotplus.erase(it);
+            result.score += 50;
+            result.atePowerPellet = true;
+        } else {
+            ++it;
+        }
+    }
+
+    return result;
 }
 
 bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
@@ -282,4 +308,3 @@ glm::vec2 Map::GetClosestGridCenter(float x, float y) const {
 
     return glm::vec2(centerX, centerY);
 }
-

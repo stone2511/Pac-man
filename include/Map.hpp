@@ -6,6 +6,11 @@
 #include <vector>
 #include <memory>
 
+struct BeanEatResult {
+    int score = 0;
+    bool atePowerPellet = false;
+};
+
 class Map {
 public:
     void Start();
@@ -18,7 +23,7 @@ public:
     //For the wall
     bool IsWallOrEdge(int gridX, int gridY) const;
 
-    int CheckAndEatBeans(glm::vec2 pacmanPos);
+    BeanEatResult CheckAndEatBeans(glm::vec2 pacmanPos);
     bool TryWrapTunnel(glm::vec2& pos, float radius) const;
 
     bool IsLevelClear() const;

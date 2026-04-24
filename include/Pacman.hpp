@@ -11,7 +11,7 @@
 class Pacman {
 public:
     void Start();   //Init
-    int Update(Map& map);    //Movement and behavior
+    BeanEatResult Update(Map& map);    //Movement and behavior
     void Animate();
     void Draw();    //Draw
     void PauseAnimation();

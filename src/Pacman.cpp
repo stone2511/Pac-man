@@ -41,7 +41,7 @@ void Pacman::Animate(){
     
 }
 
-int Pacman::Update(Map& map) {
+BeanEatResult Pacman::Update(Map& map) {
     //Pacman coordinate
     auto pos = m_Pacman->m_Transform.translation;
 
@@ -77,8 +77,7 @@ int Pacman::Update(Map& map) {
     m_Pacman->m_Transform.translation = pos;
     UpdateAnimation(didMove);
 
-    int score = map.CheckAndEatBeans(pos);
-    return score;
+    return map.CheckAndEatBeans(pos);
 }
 
 void Pacman::Draw() {

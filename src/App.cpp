@@ -65,17 +65,28 @@ void App::Update() {
     
     
 
-    points = m_Pacman.Update(m_Map);
-    if (points > 0) {
-        m_Scoreboard.AddScore(points); 
+    const BeanEatResult eatResult = m_Pacman.Update(m_Map);
+    if (eatResult.score > 0) {
+        m_Scoreboard.AddScore(eatResult.score); 
+    }
+
+    if (eatResult.atePowerPellet) {
+        m_GhostManager.TriggerPowerMode();
     }
             
     if (m_Map.IsLevelClear()){
         m_CurrentState = State::RESET;
     }
 
-    else if (m_GhostManager.CheckCollision(m_Pacman.GetPosition())){
-        StartDeathSequence();
+    else {
+        const GhostCollisionResult collisionResult =
+            m_GhostManager.ResolveCollision(m_Pacman.GetPosition());
+
+        if (collisionResult == GhostCollisionResult::PACMAN_DIED) {
+            StartDeathSequence();
+        } else if (collisionResult == GhostCollisionResult::GHOST_EATEN) {
+            m_Scoreboard.AddScore(m_GhostManager.GetGhostEatScore());
+        }
     }
     /*
      * Do not touch the code below as they serve the purpose for
