@@ -55,6 +55,7 @@ private:
     //分數和計時器
     int points = 0;
     float GameOverTimer = 0.0f;
+    int level = 1;
 
     //成員呼叫
     Map m_Map;

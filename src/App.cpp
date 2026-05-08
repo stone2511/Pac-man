@@ -9,7 +9,7 @@ void App::Start() {
     LOG_TRACE("Start");
 
     //Init Map
-    m_Map.Start();
+    m_Map.Start(level);
 
     //Init Pacman
     m_Pacman.Start();
@@ -43,6 +43,7 @@ void App::Update() {
     }
             
     if (m_Map.IsLevelClear()){
+        level++;
         m_CurrentState = State::RESET;
     }
 
@@ -67,7 +68,7 @@ void App::Reset() {
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
         m_Scoreboard.NextLevel();
         m_Scoreboard.ResetLives();
-        m_Map.ResetData();
+        m_Map.Start(level);
         m_Pacman.Reset();
         m_GhostManager.Reset();
         m_CurrentState = State::UPDATE;     

@@ -25,7 +25,7 @@ private:
     float m_RealseTimer = 0.0f;
 
     //鬼的釋放時間
-    const std::vector<float> m_Re alse = {0.0f, 5.0f, 10.0f, 15.0f};
+    const std::vector<float> m_Realse = {0.0f, 5.0f, 10.0f, 15.0f};
 };
 
 #endif

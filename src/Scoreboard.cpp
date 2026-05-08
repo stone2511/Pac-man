@@ -63,6 +63,10 @@ void Scoreboard::NextLevel() {
     ));
 }
 
+int Scoreboard::GetLevel(){
+    return m_Level;
+}
+
 
 void Scoreboard::UpdateScoreText() {
     m_ScoreText->SetDrawable(std::make_shared<Util::Text>(
