@@ -193,7 +193,7 @@ void App::DrawVictory() {
     m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        50, 
+        25, 
         "Victory(Press Tab to NextLevel)", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
@@ -204,7 +204,7 @@ void App::DrawDead() {
     m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        50, 
+        25, 
         "You dead. (Press Tab to Continue)", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
@@ -215,7 +215,7 @@ void App::DrawGameover(){
     m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        50, 
+        25, 
         "Game Over!!!", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
