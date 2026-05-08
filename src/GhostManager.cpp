@@ -54,23 +54,24 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
             m_Ghosts[i]->SetHouseState(HouseState::EXITING);
         }
 
+        GhostState ghostState = m_CurrentState;
+        if (m_Ghosts[i]->IsReturningToHouse()) {
+            ghostState = GhostState::EATEN;
+        }
+
+        if (ghostState == GhostState::FRIGHTENED && m_Ghosts[i]->IgnoresFrightened()) {
+            ghostState = m_NormalState;
+        }
+
+        const float frightenedTimeRemaining =
+            ghostState == GhostState::FRIGHTENED ? m_FrightenedTimer : 0.0f;
+
         if(m_Ghosts[i]->IsActive()){
-            GhostState ghostState = m_CurrentState;
-            if (m_Ghosts[i]->IsReturningToHouse()) {
-                ghostState = GhostState::EATEN;
-            }
-
-            if (ghostState == GhostState::FRIGHTENED && m_Ghosts[i]->IgnoresFrightened()) {
-                ghostState = m_NormalState;
-            }
-
-            m_Ghosts[i]->SetFrightenedTimeRemaining(
-                ghostState == GhostState::FRIGHTENED ? m_FrightenedTimer : 0.0f
-            );
+            m_Ghosts[i]->SetFrightenedTimeRemaining(frightenedTimeRemaining);
             m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, blinkyPos, ghostState);
         }
         else{
-            //todo
+            m_Ghosts[i]->RefreshDrawable(ghostState, frightenedTimeRemaining);
         }
     }
 }

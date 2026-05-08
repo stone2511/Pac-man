@@ -38,6 +38,7 @@ public:
     void Reset();
     void BecomeEaten();
     void ReverseDirection();
+    void RefreshDrawable(GhostState state, float frightenedTimeRemaining);
     void SetFrightenedTimeRemaining(float timeRemaining);
     void ResetFrightenedImmunity();
     bool IgnoresFrightened() const;
@@ -55,6 +56,7 @@ public:
 protected:
     void UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state);
     void UpdateDrawableForState(GhostState state);
+    std::shared_ptr<Core::Drawable> GetEyesDrawableForDirection(Direction direction) const;
     bool HandleExitHouse(const Map& map, glm::vec2& pos);
     bool HandleReturnToHouse(const Map& map, glm::vec2& pos);
     Direction ChooseNextDirection(const Map& map, glm::vec2 pos, glm::vec2 targetPos, GhostState state) const;
@@ -75,13 +77,18 @@ protected:
     std::shared_ptr<Util::GameObject> m_GhostObj;
     std::shared_ptr<Core::Drawable> m_NormalDrawable;
     std::shared_ptr<Core::Drawable> m_EyesDrawable;
+    std::shared_ptr<Core::Drawable> m_EyesUpDrawable;
+    std::shared_ptr<Core::Drawable> m_EyesDownDrawable;
+    std::shared_ptr<Core::Drawable> m_EyesLeftDrawable;
+    std::shared_ptr<Core::Drawable> m_EyesRightDrawable;
     std::shared_ptr<Util::Animation> m_FrightenedAnimation;
     std::shared_ptr<Util::Animation> m_FrightenedWarningAnimation;
     float m_NormalSpeed = 2.0f;
     float m_FrightenedSpeed = 1.2f;
-    float m_EatenSpeed = 3.0f;
+    float m_EatenSpeed = 6.0f;
     float m_FrightenedTimeRemaining = 0.0f;
     bool m_IgnoreFrightened = false;
+    bool m_HasEnteredHouseDoor = false;
     Direction m_CurrentDir = Direction::LEFT;
 };
 
