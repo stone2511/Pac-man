@@ -3,6 +3,7 @@
 
 #include "Ghost.hpp"
 #include "Map.hpp"
+#include "LevelConfig.hpp"
 #include <vector>
 #include <memory>
 
@@ -17,7 +18,7 @@ public:
     void Start(const Map& map);
     void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir);
     void Draw();
-    void Reset();
+    void Reset(LevelConfig config);
     void SetVisible(bool visible);
     void TriggerPowerMode();
     int GetGhostEatScore() const;
@@ -37,8 +38,8 @@ private:
     int m_GhostEatChain = 0;
 
     //鬼的釋放時間
-    const std::vector<float> m_Release = {0.0f, 5.0f, 10.0f, 15.0f};
-    const float m_FrightenedDuration = 8.0f;
+    std::vector<float> m_Release = {0.0f, 5.0f, 10.0f, 15.0f};
+    float m_FrightenedDuration = 8.0f;
 };
 
 #endif

@@ -6,11 +6,27 @@
 #include "Util/Logger.hpp"
 #include "Util/Time.hpp"
 
+LevelConfig App::GetLevelConfig(int level){
+    LevelConfig config;
+    config.mapIndex = (level-1) % 3;
+    config.ghostSpeed = 2.0f + (level * 0.1f);
+    if(config.ghostSpeed >= 4.0f) config.ghostSpeed = 4.0f;
+
+    config.frightenedDuration = 8.0f - (level * 0.5f);
+    if(config.frightenedDuration <= 0.5f) config.frightenedDuration = 0.5f;
+
+    float cycle = 10.0f - (level * 0.5f);
+    if(cycle <= 0.0f) cycle = 0.0f;
+    config.release = {0.0f, cycle*0.3f, cycle*0.6f, cycle};
+
+    return config;
+}
+
 void App::Start() {
     LOG_TRACE("Start");
 
     //Init Map
-    m_Map.Start(level);
+    m_Map.Start(0);
 
     //Init Pacman
     m_Pacman.Start();
@@ -128,13 +144,15 @@ void App::Reset() {
 
     DrawVictory();
     m_GameText->Draw();
+    LevelConfig config = GetLevelConfig(level);
 
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
+        
         m_Scoreboard.NextLevel();
         m_Scoreboard.ResetLives();
-        m_Map.Start(level);
+        m_Map.Start(config.mapIndex);
         m_Pacman.Reset();
-        m_GhostManager.Reset();
+        m_GhostManager.Reset(config);
         ResetDeathSequence();//避免下一命延續舊狀態。
         m_CurrentState = State::UPDATE;     
     }
@@ -149,9 +167,10 @@ void App::Dead() {
 
     //死亡不重置地圖
     if(Util::Input::IsKeyUp(Util::Keycode::TAB)){
+        LevelConfig config = GetLevelConfig(level);
         m_Scoreboard.MinusLives();
         m_Pacman.Reset();
-        m_GhostManager.Reset();
+        m_GhostManager.Reset(config);
         ResetDeathSequence();
         m_CurrentState = State::UPDATE;
     }

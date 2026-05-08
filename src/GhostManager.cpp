@@ -19,7 +19,25 @@ void GhostManager::Start(const Map& map) {
     auto clyde = std::make_shared<Ghost_Clyde>(map.GridToWorld(11.1f, 9.0f));
     clyde->SetHomePosition(map.GridToWorld(11.0f, 9.0f));
     m_Ghosts.push_back(clyde);
-    Reset();
+    //LevelConfig config;
+    //Reset(config);
+    if (m_Ghosts.empty()) {
+        return;
+    }
+
+    m_NormalState = GhostState::SCATTER;
+    m_CurrentState = GhostState::SCATTER;
+    m_StateTimer = 0.0f;
+    m_ReleaseTimer = 0.0f;
+    m_FrightenedTimer = 0.0f;
+    m_GhostEatChain = 0;
+    SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
+
+    for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
+        m_Ghosts[i]->Reset();
+        m_Ghosts[i]->SetIsActive(i==0);
+        m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
+    }
 }
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir) {
@@ -88,7 +106,13 @@ void GhostManager::SetVisible(bool visible) {
     }
 }
 
-void GhostManager::Reset(){
+void GhostManager::Reset(LevelConfig config){
+    std::vector<float> m_Release = config.release;
+    float m_FrightenedDuration = config.frightenedDuration;
+    /*for (auto& ghost : m_Ghosts){
+        ghost->SetSpeed(config.ghostSpeed);
+    }*/
+
     if (m_Ghosts.empty()) {
         return;
     }

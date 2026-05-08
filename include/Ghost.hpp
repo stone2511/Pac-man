@@ -47,6 +47,7 @@ public:
     bool IsActive() const;
     void SetVisible(bool visible);
     bool IsVisible() const;
+    void SetSpeed(float s);
 
     void SetHouseState(HouseState s);
     HouseState GetHouseState() const;

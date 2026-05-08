@@ -6,14 +6,13 @@
 #include <cmath>
 #include <utility>
 
-void Map::Start(int level) {
+void Map::Start(int mapIndex) {
     m_Blocks.clear();
     m_dots.clear();
     m_dotplus.clear();
     m_door.clear();
 
     //Map
-    int mapIndex = (level-1) % 3;
     switch(mapIndex){
         case 0:
             m_Level = {

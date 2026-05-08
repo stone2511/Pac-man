@@ -23,6 +23,7 @@ set(INCLUDE_FILES
     GhostManager.hpp
     Ghost.hpp
     Direction.hpp
+    LevelConfig.hpp
 )
 
 set(TEST_FILES

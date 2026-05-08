@@ -110,6 +110,10 @@ bool Ghost::IsVisible() const {
     return m_GhostObj->GetVisible();
 }
 
+void Ghost::SetSpeed(float s) {
+    m_NormalSpeed = s;
+}
+
 void Ghost::SetHouseState(HouseState s) {
     m_HouseState = s;
 }
