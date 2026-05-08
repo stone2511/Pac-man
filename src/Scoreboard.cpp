@@ -6,7 +6,7 @@ void Scoreboard::Start() {
     m_ScoreText = std::make_shared<Util::GameObject>();
     m_ScoreText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "SCORE: 0", 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
@@ -15,7 +15,7 @@ void Scoreboard::Start() {
     m_LevelText = std::make_shared<Util::GameObject>();
     m_LevelText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "LEVEL: 1", 
         Util::Color::FromName(Util::Colors::WHITE)
     ));
@@ -24,7 +24,7 @@ void Scoreboard::Start() {
     m_LivesText = std::make_shared<Util::GameObject>();
     m_LivesText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "Lives: 3" , 
         Util::Color::FromName(Util::Colors::WHITE)
     ));
@@ -40,7 +40,7 @@ void Scoreboard::MinusLives(){
     m_Lives--;
     m_LivesText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "Lives: " + std::to_string(m_Lives), 
         Util::Color::FromName(Util::Colors::WHITE)
     ));
@@ -57,7 +57,7 @@ void Scoreboard::NextLevel() {
     m_Level++;
     m_LevelText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "LEVEL: " + std::to_string(m_Level), 
         Util::Color::FromName(Util::Colors::WHITE)
     ));
@@ -71,7 +71,7 @@ int Scoreboard::GetLevel(){
 void Scoreboard::UpdateScoreText() {
     m_ScoreText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "SCORE: " + std::to_string(m_Score), 
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
@@ -85,7 +85,7 @@ void Scoreboard::ResetLives(){
     m_Lives = 3;
     m_LivesText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
-        40, 
+        20, 
         "Lives: " + std::to_string(m_Lives), 
         Util::Color::FromName(Util::Colors::WHITE)
     ));

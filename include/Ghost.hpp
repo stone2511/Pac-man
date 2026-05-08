@@ -27,7 +27,7 @@ enum class HouseState {
 
 class Ghost {
 public:
-    Ghost(const std::string& texturePath, glm::vec2 worldPos);
+    Ghost(const std::string& ghostName, glm::vec2 worldPos);
     virtual ~Ghost() = default;
 
     virtual void Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) = 0; 
@@ -56,8 +56,10 @@ public:
 protected:
     void UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state);
     void UpdateDrawableForState(GhostState state);
+    void PauseNormalAnimations();
+    std::shared_ptr<Util::Animation> GetNormalAnimationForDirection(Direction direction) const;
     std::shared_ptr<Core::Drawable> GetEyesDrawableForDirection(Direction direction) const;
-    bool HandleExitHouse(const Map& map, glm::vec2& pos);
+    bool HandleExitHouse(const Map& map, glm::vec2& pos, GhostState state);
     bool HandleReturnToHouse(const Map& map, glm::vec2& pos);
     Direction ChooseNextDirection(const Map& map, glm::vec2 pos, glm::vec2 targetPos, GhostState state) const;
     Direction ChooseRandomDirection(const Map& map, glm::vec2 pos, Direction previousDirection) const;
@@ -75,7 +77,11 @@ protected:
 
 protected:
     std::shared_ptr<Util::GameObject> m_GhostObj;
-    std::shared_ptr<Core::Drawable> m_NormalDrawable;
+    std::shared_ptr<Util::Animation> m_UpAnimation;
+    std::shared_ptr<Util::Animation> m_DownAnimation;
+    std::shared_ptr<Util::Animation> m_LeftAnimation;
+    std::shared_ptr<Util::Animation> m_RightAnimation;
+    std::shared_ptr<Util::Animation> m_CurrentAnimation;
     std::shared_ptr<Core::Drawable> m_EyesDrawable;
     std::shared_ptr<Core::Drawable> m_EyesUpDrawable;
     std::shared_ptr<Core::Drawable> m_EyesDownDrawable;

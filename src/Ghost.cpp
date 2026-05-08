@@ -4,9 +4,29 @@
 #include <random>
 
 // 建立鬼的圖像、動畫與初始位置資料。
-Ghost::Ghost(const std::string& texturePath, glm::vec2 worldPos) {
+Ghost::Ghost(const std::string& ghostName, glm::vec2 worldPos) {
+    const auto makeAnimation = [&ghostName](const std::string& direction) {
+        const std::string basePath =
+            std::string(RESOURCE_DIR) + "/Image/ghost/" + ghostName + "/" +
+            ghostName + "_" + direction;
+        return std::make_shared<Util::Animation>(
+            std::vector<std::string>{
+                basePath + "0.png",
+                basePath + "1.png"
+            },
+            false,
+            120,
+            true,
+            0
+        );
+    };
+
     m_GhostObj = std::make_shared<Util::GameObject>();
-    m_NormalDrawable = std::make_shared<Util::Image>(texturePath);
+    m_UpAnimation = makeAnimation("up");
+    m_DownAnimation = makeAnimation("down");
+    m_LeftAnimation = makeAnimation("left");
+    m_RightAnimation = makeAnimation("right");
+    m_CurrentAnimation = m_LeftAnimation;
     m_EyesDrawable = std::make_shared<Util::Image>(
         RESOURCE_DIR"/Image/ghost/frightened/eyes0.png"
     );
@@ -44,7 +64,7 @@ Ghost::Ghost(const std::string& texturePath, glm::vec2 worldPos) {
         true,
         0
     );
-    m_GhostObj->SetDrawable(m_NormalDrawable);
+    m_GhostObj->SetDrawable(m_CurrentAnimation);
     m_SpawnPos = worldPos;
     m_HomePos = worldPos;
     m_GhostObj->m_Transform.translation = m_SpawnPos;
@@ -64,7 +84,13 @@ glm::vec2 Ghost::GetPosition() const {
 // 重設鬼的狀態、動畫與位置，供重新開始一命或重開關卡時使用。
 void Ghost::Reset(){
     m_GhostObj->m_Transform.translation = m_SpawnPos;
-    m_GhostObj->SetDrawable(m_NormalDrawable);
+    PauseNormalAnimations();
+    m_UpAnimation->SetCurrentFrame(0);
+    m_DownAnimation->SetCurrentFrame(0);
+    m_LeftAnimation->SetCurrentFrame(0);
+    m_RightAnimation->SetCurrentFrame(0);
+    m_CurrentAnimation = m_LeftAnimation;
+    m_GhostObj->SetDrawable(m_CurrentAnimation);
     m_FrightenedAnimation->Pause();
     m_FrightenedAnimation->SetCurrentFrame(0);
     m_FrightenedWarningAnimation->Pause();
@@ -79,6 +105,7 @@ void Ghost::Reset(){
 // 把鬼切換成被吃掉後的狀態，之後會用眼睛型態返回鬼屋。
 void Ghost::BecomeEaten() {
     m_GhostObj->SetVisible(true);
+    PauseNormalAnimations();
     m_GhostObj->SetDrawable(GetEyesDrawableForDirection(m_CurrentDir));
     m_FrightenedAnimation->Pause();
     m_FrightenedAnimation->SetCurrentFrame(0);
@@ -99,6 +126,9 @@ void Ghost::ReverseDirection() {
 void Ghost::RefreshDrawable(GhostState state, float frightenedTimeRemaining) {
     m_FrightenedTimeRemaining = frightenedTimeRemaining;
     UpdateDrawableForState(state);
+    if (state != GhostState::FRIGHTENED && state != GhostState::EATEN) {
+        PauseNormalAnimations();
+    }
 }
 
 // 更新 frightened 剩餘時間，讓閃爍動畫可以依時間切換。
@@ -161,7 +191,7 @@ void Ghost::UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state
     UpdateDrawableForState(state);
 
     auto pos = m_GhostObj->m_Transform.translation;
-    if (HandleExitHouse(map, pos)) {
+    if (HandleExitHouse(map, pos, state)) {
         m_GhostObj->m_Transform.translation = pos;
         return;
     }
@@ -206,12 +236,14 @@ void Ghost::UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state
         pos += GetDirectionVector(m_CurrentDir, speed);
     }
     map.TryWrapTunnel(pos, 16.0f);
+    UpdateDrawableForState(state);
     m_GhostObj->m_Transform.translation = pos;
 }
 
 // 依照狀態切換普通、frightened、閃爍警告與眼睛素材。
 void Ghost::UpdateDrawableForState(GhostState state) {
     if (state == GhostState::EATEN) {
+        PauseNormalAnimations();
         m_FrightenedAnimation->Pause();
         m_FrightenedAnimation->SetCurrentFrame(0);
         m_FrightenedWarningAnimation->Pause();
@@ -221,6 +253,7 @@ void Ghost::UpdateDrawableForState(GhostState state) {
     }
 
     if (state == GhostState::FRIGHTENED) {
+        PauseNormalAnimations();
         auto frightenedDrawable = m_FrightenedAnimation;
         if (m_FrightenedTimeRemaining <= 3.0f) {
             frightenedDrawable = m_FrightenedWarningAnimation;
@@ -242,7 +275,43 @@ void Ghost::UpdateDrawableForState(GhostState state) {
     m_FrightenedAnimation->SetCurrentFrame(0);
     m_FrightenedWarningAnimation->Pause();
     m_FrightenedWarningAnimation->SetCurrentFrame(0);
-    m_GhostObj->SetDrawable(m_NormalDrawable);
+
+    auto normalAnimation = GetNormalAnimationForDirection(m_CurrentDir);
+    if (m_CurrentAnimation != normalAnimation) {
+        if (m_CurrentAnimation != nullptr) {
+            m_CurrentAnimation->Pause();
+        }
+        m_CurrentAnimation = normalAnimation;
+    }
+
+    if (m_GhostObj->GetVisible()) {
+        m_CurrentAnimation->Play();
+    }
+    m_GhostObj->SetDrawable(m_CurrentAnimation);
+}
+
+// 暫停所有普通移動動畫，避免切到特殊狀態時背景繼續更新。
+void Ghost::PauseNormalAnimations() {
+    m_UpAnimation->Pause();
+    m_DownAnimation->Pause();
+    m_LeftAnimation->Pause();
+    m_RightAnimation->Pause();
+}
+
+// 依照目前方向選擇一般狀態的移動動畫；無方向時沿用最後面向。
+std::shared_ptr<Util::Animation> Ghost::GetNormalAnimationForDirection(Direction direction) const {
+    switch (direction) {
+        case Direction::UP:
+            return m_UpAnimation;
+        case Direction::DOWN:
+            return m_DownAnimation;
+        case Direction::RIGHT:
+            return m_RightAnimation;
+        case Direction::LEFT:
+        case Direction::NONE:
+        default:
+            return m_LeftAnimation;
+    }
 }
 
 // 根據眼睛前進方向選擇對應圖片；沒有方向時沿用舊的預設眼睛圖。
@@ -263,7 +332,7 @@ std::shared_ptr<Core::Drawable> Ghost::GetEyesDrawableForDirection(Direction dir
 }
 
 // 處理鬼從鬼屋移動到門口並正式出門的流程。
-bool Ghost::HandleExitHouse(const Map& map, glm::vec2& pos) {
+bool Ghost::HandleExitHouse(const Map& map, glm::vec2& pos, GhostState state) {
     if (m_HouseState != HouseState::EXITING) {
         return false;
     }
@@ -272,12 +341,16 @@ bool Ghost::HandleExitHouse(const Map& map, glm::vec2& pos) {
     const float exitSpeed = m_NormalSpeed;
 
     if (std::abs(pos.x - doorPos.x) > exitSpeed) {
+        m_CurrentDir = pos.x < doorPos.x ? Direction::RIGHT : Direction::LEFT;
+        UpdateDrawableForState(state);
         pos.x += (pos.x < doorPos.x) ? exitSpeed : -exitSpeed;
         return true;
     }
 
     pos.x = doorPos.x;
     if (std::abs(pos.y - doorPos.y) > exitSpeed) {
+        m_CurrentDir = pos.y < doorPos.y ? Direction::UP : Direction::DOWN;
+        UpdateDrawableForState(state);
         pos.y += (pos.y < doorPos.y) ? exitSpeed : -exitSpeed;
         return true;
     }
@@ -340,7 +413,8 @@ bool Ghost::HandleReturnToHouse(const Map& map, glm::vec2& pos) {
     }
 
     pos = m_HomePos;
-    m_GhostObj->SetDrawable(m_NormalDrawable);
+    m_CurrentAnimation = GetNormalAnimationForDirection(Direction::UP);
+    m_GhostObj->SetDrawable(m_CurrentAnimation);
     m_HouseState = HouseState::EXITING;
     m_HasEnteredHouseDoor = false;
     m_CurrentDir = Direction::UP;
