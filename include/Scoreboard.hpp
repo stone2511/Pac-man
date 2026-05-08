@@ -13,7 +13,9 @@ public:
 
     void AddScore(int points); 
     void MinusLives();
+
     void NextLevel();
+    int GetLevel();
 
     int GetLives();
     void ResetLives();

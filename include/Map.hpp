@@ -3,6 +3,7 @@
 
 #include "pch.hpp"
 #include "Util/GameObject.hpp"
+#include "Scoreboard.hpp"
 #include <vector>
 #include <memory>
 
@@ -13,7 +14,7 @@ struct BeanEatResult {
 
 class Map {
 public:
-    void Start();
+    void Start(int level);
     
     void Draw();
 
@@ -27,7 +28,7 @@ public:
     bool TryWrapTunnel(glm::vec2& pos, float radius) const;
 
     bool IsLevelClear() const;
-    void ResetData();
+    //void ResetData();
     
     glm::vec2 GridToWorld(float gridX, float gridY) const;
     glm::vec2 GetClosestGridCenter(float x, float y) const;

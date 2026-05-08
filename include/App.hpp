@@ -60,6 +60,7 @@ private:
 
     //分數和計時器
     float GameOverTimer = 0.0f;
+    int level = 1;
     float m_DeathSequenceTimer = 0.0f;
     bool m_HasHiddenGhosts = false;
     bool m_HasStartedDeathAnimation = false;
