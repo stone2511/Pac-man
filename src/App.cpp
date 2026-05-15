@@ -9,11 +9,20 @@
 LevelConfig App::GetLevelConfig(int level){
     LevelConfig config;
     config.mapIndex = (level-1) % 5;
-    config.ghostSpeed = 2.0f + (level * 0.1f);
+    int l;
+    switch(level){
+        case 10:
+            l = 1;
+            break;
+        default:
+            l = 0;
+            break;
+    }
+    config.ghostSpeed = 2.0f + (l*1.0f);
     if(config.ghostSpeed >= 4.0f) config.ghostSpeed = 4.0f;
 
     config.frightenedDuration = 8.0f - (level * 0.5f);
-    if(config.frightenedDuration <= 0.5f) config.frightenedDuration = 0.5f;
+    if(config.frightenedDuration <= 3.0f) config.frightenedDuration = 3.0f;
 
     float cycle = 10.0f - (level * 0.5f);
     if(cycle <= 0.0f) cycle = 0.0f;

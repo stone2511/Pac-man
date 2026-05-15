@@ -110,11 +110,11 @@ void GhostManager::SetVisible(bool visible) {
 }
 
 void GhostManager::Reset(LevelConfig config){
-    std::vector<float> m_Release = config.release;
-    float m_FrightenedDuration = config.frightenedDuration;
-    /*for (auto& ghost : m_Ghosts){
+    m_Release = config.release;
+    m_FrightenedDuration = config.frightenedDuration;
+    for (auto& ghost : m_Ghosts){
         ghost->SetSpeed(config.ghostSpeed);
-    }*/
+    }
 
     if (m_Ghosts.empty()) {
         return;
