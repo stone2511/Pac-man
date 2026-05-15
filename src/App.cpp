@@ -8,7 +8,7 @@
 
 LevelConfig App::GetLevelConfig(int level){
     LevelConfig config;
-    config.mapIndex = (level-1) % 3;
+    config.mapIndex = (level-1) % 5;
     config.ghostSpeed = 2.0f + (level * 0.1f);
     if(config.ghostSpeed >= 4.0f) config.ghostSpeed = 4.0f;
 
@@ -90,6 +90,13 @@ void App::Update() {
         m_GhostManager.TriggerPowerMode();
     }
             
+    if (Util::Input::IsKeyUp(Util::Keycode::E)){
+        level++;
+        m_CurrentState = State::RESET;
+    }
+
+
+
     if (m_Map.IsLevelClear()){
         level++;
         m_CurrentState = State::RESET;
