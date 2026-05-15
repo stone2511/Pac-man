@@ -40,9 +40,11 @@ void GhostManager::Start(const Map& map) {
     }
 }
 
-void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir) {
+void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, int level) {
     const float deltaTime = Util::Time::GetDeltaTimeMs() / 1000.0f;
     m_ReleaseTimer += deltaTime;
+
+    float scatter_time = 7.0f - level*0.5f;
 
     if (m_CurrentState == GhostState::FRIGHTENED) {
         m_FrightenedTimer -= deltaTime;
@@ -53,7 +55,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
     } else {
         m_StateTimer += deltaTime;
 
-        if (m_NormalState == GhostState::SCATTER && m_StateTimer >= 7.0f) {
+        if (m_NormalState == GhostState::SCATTER && m_StateTimer >= scatter_time) {
             m_NormalState = GhostState::CHASE;
             m_StateTimer = 0.0f;
         } else if (m_NormalState == GhostState::CHASE && m_StateTimer >= 20.0f) {

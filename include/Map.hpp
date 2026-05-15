@@ -34,6 +34,9 @@ public:
     glm::vec2 GetClosestGridCenter(float x, float y) const;
 
 private:
+    bool IsTunnelRow(int gridY) const;
+    bool HasTunnelEntrance(int gridY, int startX, int step) const;
+
     std::vector<std::vector<int>> m_Level;
     
     std::vector<std::shared_ptr<Util::GameObject>> m_Blocks;

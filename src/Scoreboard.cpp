@@ -55,6 +55,11 @@ void Scoreboard::Draw() {
 
 void Scoreboard::NextLevel() {
     m_Level++;
+    SetLevel(m_Level);
+}
+
+void Scoreboard::SetLevel(int level) {
+    m_Level = level;
     m_LevelText->SetDrawable(std::make_shared<Util::Text>(
         RESOURCE_DIR"/font/inkfree.ttf", 
         20, 

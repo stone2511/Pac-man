@@ -49,6 +49,41 @@ void App::DrawGameplay() {
     m_GhostManager.Draw();
 }
 
+bool App::HandleLevelShortcut() {
+    if (Util::Input::IsKeyUp(Util::Keycode::NUM_1)) {
+        LoadLevel(1);
+        return true;
+    }
+    if (Util::Input::IsKeyUp(Util::Keycode::NUM_2)) {
+        LoadLevel(2);
+        return true;
+    }
+    if (Util::Input::IsKeyUp(Util::Keycode::NUM_3)) {
+        LoadLevel(3);
+        return true;
+    }
+    if (Util::Input::IsKeyUp(Util::Keycode::NUM_4)) {
+        LoadLevel(4);
+        return true;
+    }
+    if (Util::Input::IsKeyUp(Util::Keycode::NUM_5)) {
+        LoadLevel(5);
+        return true;
+    }
+
+    return false;
+}
+
+void App::LoadLevel(int newLevel) {
+    level = newLevel;
+    m_Scoreboard.SetLevel(level);
+    m_Map.Start(level);
+    m_Pacman.Reset();
+    m_GhostManager.Start(m_Map);
+    ResetDeathSequence();
+    m_CurrentState = State::UPDATE;
+}
+
 //清掉死亡計時器、重設旗標、確保鬼先顯示、暫停 Pacman 動畫，然後切到 DYING。
 void App::StartDeathSequence() {
     m_DeathSequenceTimer = 0.0f;
@@ -68,6 +103,9 @@ void App::ResetDeathSequence() {
 }
 
 void App::Update() {
+    if (HandleLevelShortcut()) {
+        return;
+    }
     
     //Draw the map
     m_Map.Draw();
@@ -76,7 +114,7 @@ void App::Update() {
     //Draw the pacman
     m_Pacman.Draw();
     //Draw the Ghost
-    m_GhostManager.Update(m_Map, m_Pacman.GetPosition(), m_Pacman.GetDirection());
+    m_GhostManager.Update(m_Map, m_Pacman.GetPosition(), m_Pacman.GetDirection(),level);
     m_GhostManager.Draw();
     
     
@@ -123,6 +161,10 @@ void App::Update() {
 }
 
 void App::Dying() {
+    if (HandleLevelShortcut()) {
+        return;
+    }
+
     m_DeathSequenceTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
 
     if (!m_HasHiddenGhosts && m_DeathSequenceTimer >= 0.5f) {
@@ -148,6 +190,9 @@ void App::Dying() {
 }
 
 void App::Reset() {
+    if (HandleLevelShortcut()) {
+        return;
+    }
 
     DrawVictory();
     m_GameText->Draw();
@@ -166,6 +211,10 @@ void App::Reset() {
 }
 
 void App::Dead() {
+    if (HandleLevelShortcut()) {
+        return;
+    }
+
     if(m_Scoreboard.GetLives()==1){ 
         m_CurrentState = State::GAMEOVER;
     }
@@ -184,6 +233,11 @@ void App::Dead() {
 }
 
 void App::Gameover() {
+    if (HandleLevelShortcut()) {
+        GameOverTimer = 0.0f;
+        return;
+    }
+
     DrawGameover();
     m_GameText->Draw();
 
