@@ -339,6 +339,7 @@ BeanEatResult Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
         if (distX < eatRadius && distY < eatRadius) {
             it = m_dots.erase(it); 
             result.score += 10;
+            result.beansEaten++;
         } else {
             ++it; 
         }
@@ -353,6 +354,7 @@ BeanEatResult Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
         if (distX < eatRadius && distY < eatRadius) {
             it = m_dotplus.erase(it);
             result.score += 50;
+            result.beansEaten++;
             result.atePowerPellet = true;
         } else {
             ++it;
