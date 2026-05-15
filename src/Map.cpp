@@ -13,7 +13,7 @@ void Map::Start(int level) {
     m_door.clear();
 
     //Map
-    int mapIndex = (level-1) % 3;
+    int mapIndex = (level-1) % 5;
     switch(mapIndex){
         case 0:
             m_Level = {
@@ -50,7 +50,7 @@ void Map::Start(int level) {
                 {1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
-                {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0}, // Tunnel
+                {0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0}, // Tunnel
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
                 {1, 2, 2, 2, 1, 2, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 2, 2, 2, 1}, // Ghost room below
                 {1, 2, 1, 2, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 2, 1, 2, 1},
@@ -75,7 +75,7 @@ void Map::Start(int level) {
                 {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
-                {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0}, // Tunnel
+                {0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0}, // Tunnel
                 {1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 4, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1},
                 {1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1}, // Ghost room below
                 {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1},
@@ -87,6 +87,56 @@ void Map::Start(int level) {
                 {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            };
+            break;
+        case 3:
+            m_Level = {
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 3, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 3, 1},
+                {1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 1},
+                {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
+                {2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2, 2}, // Tunnel
+                {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 1},
+                {1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
+                {1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1},
+                {1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1},
+                {1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+            };
+            break;
+        case 4:
+            m_Level = {
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 3, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 3, 1},
+                {1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0}, // Tunnel
+                {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
+                {1, 2, 2, 2, 1, 2, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 2, 2, 2, 1},
+                {1, 2, 1, 2, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 2, 1, 2, 1},
+                {1, 2, 1, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2, 1},
+                {1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
+                {1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1},
+                {1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1},
+                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
             };
@@ -103,17 +153,19 @@ void Map::Start(int level) {
     m_StartX = -(mapWidth / 2.0f) + (m_GridSize / 2.0f); 
     m_StartY = (mapHeight / 2.0f) - (m_GridSize / 2.0f);
 
-    for (int y = 0; y < m_Level.size(); y++) {
-        for (int x = 0; x < m_Level[y].size(); x++) {
+    for (std::size_t y = 0; y < m_Level.size(); y++) {
+        for (std::size_t x = 0; x < m_Level[y].size(); x++) {
             
 
             if (m_Level[y][x] == 1) {
                 //I use binary method to encode the image name
                 //And use wallID to pair the correct wall texture
-                bool up    = IsWallOrEdge(x, y - 1);
-                bool down  = IsWallOrEdge(x, y + 1);
-                bool left  = IsWallOrEdge(x - 1, y);
-                bool right = IsWallOrEdge(x + 1, y);
+                const int gridX = static_cast<int>(x);
+                const int gridY = static_cast<int>(y);
+                bool up    = IsWallOrEdge(gridX, gridY - 1);
+                bool down  = IsWallOrEdge(gridX, gridY + 1);
+                bool left  = IsWallOrEdge(gridX - 1, gridY);
+                bool right = IsWallOrEdge(gridX + 1, gridY);
                 
                 int wallID = 0;
                 if (up)     wallID += 8;
@@ -143,7 +195,7 @@ void Map::Start(int level) {
 
                 block->SetDrawable(std::make_shared<Util::Image>(wallTextures[wallID]));
     
-                block->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                block->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
                 block->SetZIndex(0);
                 m_Blocks.push_back(block);
             }
@@ -153,7 +205,7 @@ void Map::Start(int level) {
             
                 dot->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dot.png"));
                 
-                dot->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                dot->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
                 dot->SetZIndex(0);
                 
                 m_dots.push_back(dot);
@@ -164,7 +216,7 @@ void Map::Start(int level) {
             
                 dotplus->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dotplus.png"));
                 
-                dotplus->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                dotplus->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
                 dotplus->SetZIndex(0);
                 
                 m_dotplus.push_back(dotplus);
@@ -175,7 +227,7 @@ void Map::Start(int level) {
             
                 door->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/door.png"));
                 
-                door->m_Transform.translation = {m_StartX + (x * m_GridSize), m_StartY - (y * m_GridSize)};
+                door->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
                 door->SetZIndex(0);
                 
                 m_door.push_back(door);
@@ -205,13 +257,10 @@ bool Map::IsWall(float x, float y) const {
     int gridX = std::round((x - m_StartX) / m_GridSize);
     int gridY = std::round((m_StartY - y) / m_GridSize);
 
-    
-    int maxX = m_Level[0].size() - 1;
-    
-    
+    int maxX = static_cast<int>(m_Level[0].size()) - 1;
+
     if (gridX <= 0 || gridX >= maxX) {
-        
-        if (gridY != 9) {
+        if (!IsTunnelRow(gridY)) {
             return true;
         }
     }
@@ -228,7 +277,8 @@ bool Map::IsDoor(float x, float y) const {
 }
 
 bool Map::IsWallOrEdge(int gridX, int gridY) const {
-    if (gridY < 0 || gridY >= m_Level.size() || gridX < 0 || gridX >= m_Level[0].size()) {
+    if (gridY < 0 || gridY >= static_cast<int>(m_Level.size()) ||
+        gridX < 0 || gridX >= static_cast<int>(m_Level[0].size())) {
         return false;
     }
 
@@ -317,15 +367,21 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
         return false;
     }
 
-    constexpr int tunnelRow = 9;
+    const float tunnelTolerance = m_GridSize / 2.0f;
+    bool isOnTunnelRow = false;
+    for (int gridY = 0; gridY < static_cast<int>(m_Level.size()); ++gridY) {
+        if (!IsTunnelRow(gridY)) {
+            continue;
+        }
 
-    if (tunnelRow < 0 || tunnelRow >= static_cast<int>(m_Level.size())) {
-        return false;
+        const float tunnelY = m_StartY - (gridY * m_GridSize);
+        if (std::abs(pos.y - tunnelY) <= tunnelTolerance) {
+            isOnTunnelRow = true;
+            break;
+        }
     }
 
-    const float tunnelY = m_StartY - (tunnelRow * m_GridSize);
-    const float tunnelTolerance = m_GridSize / 2.0f;
-    if (std::abs(pos.y - tunnelY) > tunnelTolerance) {
+    if (!isOnTunnelRow) {
         return false;
     }
 
@@ -345,6 +401,36 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
     if (pos.x + radius >= rightEdge) {
         pos.x = leftEntranceX;
         return true;
+    }
+
+    return false;
+}
+
+bool Map::IsTunnelRow(int gridY) const {
+    if (m_Level.empty() || gridY < 0 || gridY >= static_cast<int>(m_Level.size())) {
+        return false;
+    }
+
+    const int maxX = static_cast<int>(m_Level[gridY].size()) - 1;
+    return HasTunnelEntrance(gridY, 0, 1) &&
+           HasTunnelEntrance(gridY, maxX, -1);
+}
+
+bool Map::HasTunnelEntrance(int gridY, int startX, int step) const {
+    if (gridY < 0 || gridY >= static_cast<int>(m_Level.size()) || step == 0) {
+        return false;
+    }
+
+    const int width = static_cast<int>(m_Level[gridY].size());
+    for (int gridX = startX; gridX >= 0 && gridX < width; gridX += step) {
+        const int tile = m_Level[gridY][gridX];
+        if (tile == 1) {
+            return false;
+        }
+
+        if (tile == 2 || tile == 3) {
+            return true;
+        }
     }
 
     return false;

@@ -15,6 +15,7 @@ public:
     void MinusLives();
 
     void NextLevel();
+    void SetLevel(int level);
     int GetLevel();
 
     int GetLives();

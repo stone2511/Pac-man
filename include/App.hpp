@@ -43,6 +43,8 @@ public:
 
 private:
     void DrawGameplay();
+    bool HandleLevelShortcut();
+    void LoadLevel(int newLevel);
     void StartDeathSequence();
     void ResetDeathSequence();
     void ValidTask();
