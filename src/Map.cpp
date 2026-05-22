@@ -271,6 +271,11 @@ bool Map::IsDoor(float x, float y) const {
     int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
     int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
 
+    if (gridX < 0 || gridX >= m_Level[0].size() || 
+        gridY < 0 || gridY >= m_Level.size()) {
+        return false;
+    }
+
     return (m_Level[gridY][gridX] == 4);
 }
 
@@ -383,6 +388,7 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
         return false;
     }
 
+    
     const float leftEdge = m_StartX - (m_GridSize / 2.0f);
     const float rightEdge =
         m_StartX + (static_cast<float>(m_Level[0].size()) * m_GridSize) -
@@ -393,11 +399,13 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
 
     if (pos.x - radius <= leftEdge) {
         pos.x = rightEntranceX;
+
         return true;
     }
 
     if (pos.x + radius >= rightEdge) {
         pos.x = leftEntranceX;
+
         return true;
     }
 

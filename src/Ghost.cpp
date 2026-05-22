@@ -194,6 +194,9 @@ void Ghost::UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state
     UpdateDrawableForState(state);
 
     auto pos = m_GhostObj->m_Transform.translation;
+
+    map.TryWrapTunnel(pos, 16.0f);
+
     if (HandleExitHouse(map, pos, state)) {
         m_GhostObj->m_Transform.translation = pos;
         return;
@@ -238,7 +241,7 @@ void Ghost::UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state
     if (m_CurrentDir != Direction::NONE && CanMoveDirection(map, pos, m_CurrentDir, speed)) {
         pos += GetDirectionVector(m_CurrentDir, speed);
     }
-    map.TryWrapTunnel(pos, 16.0f);
+    map.TryWrapTunnel(pos, 14.0f);
     UpdateDrawableForState(state);
     m_GhostObj->m_Transform.translation = pos;
 }
