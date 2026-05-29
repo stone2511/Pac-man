@@ -1,6 +1,7 @@
 #include "Map.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Image.hpp"
+#include "Util/Time.hpp"
 #include <imgui.h>
 #include <string>
 #include <cmath>
@@ -11,6 +12,8 @@ void Map::Start(int level) {
     m_dots.clear();
     m_dotplus.clear();
     m_door.clear();
+    m_PowerPelletBlinkTimer = 0.0f;
+    m_IsPowerPelletVisible = true;
 
     //Map
     int mapIndex = (level-1) % 5;
@@ -238,14 +241,22 @@ void Map::Start(int level) {
 }
 
 void Map::Draw() {
+    m_PowerPelletBlinkTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
+    if (m_PowerPelletBlinkTimer >= m_PowerPelletBlinkInterval) {
+        m_PowerPelletBlinkTimer = 0.0f;
+        m_IsPowerPelletVisible = !m_IsPowerPelletVisible;
+    }
+
     for (auto& block : m_Blocks) {
         block->Draw();
     }
     for (auto& dot : m_dots) {
         dot->Draw();
     }
-    for (auto& dotplus : m_dotplus) {
-        dotplus->Draw();
+    if (m_IsPowerPelletVisible) {
+        for (auto& dotplus : m_dotplus) {
+            dotplus->Draw();
+        }
     }
     for (auto& door : m_door) {
         door->Draw();

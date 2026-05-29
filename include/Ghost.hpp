@@ -39,6 +39,7 @@ public:
     void BecomeEaten();
     void ReverseDirection();
     void RefreshDrawable(GhostState state, float frightenedTimeRemaining);
+    void UpdateHouseIdle(GhostState state, float frightenedTimeRemaining);
     void SetFrightenedTimeRemaining(float timeRemaining);
     void ResetFrightenedImmunity();
     bool IgnoresFrightened() const;
@@ -48,6 +49,7 @@ public:
     bool IsActive() const;
     void SetVisible(bool visible);
     bool IsVisible() const;
+    void PauseAnimation();
 
     void SetHouseState(HouseState s);
     HouseState GetHouseState() const;
@@ -56,6 +58,7 @@ public:
 protected:
     void UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state);
     void UpdateDrawableForState(GhostState state);
+    void SetHouseIdleStartDirection(Direction direction);
     void PauseNormalAnimations();
     std::shared_ptr<Util::Animation> GetNormalAnimationForDirection(Direction direction) const;
     std::shared_ptr<Core::Drawable> GetEyesDrawableForDirection(Direction direction) const;
@@ -96,7 +99,12 @@ protected:
     float m_FrightenedTimeRemaining = 0.0f;
     bool m_IgnoreFrightened = false;
     bool m_HasEnteredHouseDoor = false;
+    Direction m_HouseIdleStartDir = Direction::UP;
+    Direction m_HouseIdleDir = Direction::UP;
     Direction m_CurrentDir = Direction::LEFT;
+
+    static constexpr float m_HouseIdleSpeed = 0.8f;
+    static constexpr float m_HouseIdleRange = 10.0f;
 };
 
 #endif

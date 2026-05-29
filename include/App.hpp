@@ -20,6 +20,7 @@ public:
         START,
         UPDATE,
         RESET,
+        EATING_GHOST,
         DYING,
         DEAD,
         GAMEOVER,
@@ -36,6 +37,8 @@ public:
     void Reset();   //遊戲的重置
 
     void Dying();   //死亡前置動畫
+
+    void EatingGhost();    //吃鬼後的短暫暫停
 
     void Dead();    //死亡
 
@@ -54,6 +57,8 @@ private:
     void UpdateFruit();
     void ShowFruitScore(glm::vec2 position);
     void UpdateFruitScoreText();
+    void ShowGhostEatScore(glm::vec2 position, int score);
+    void UpdateGhostEatScoreText();
     void DrawFruit();
     void LoadFruitForLevel();
     int GetFruitScoreForLevel(int level) const;
@@ -82,13 +87,18 @@ private:
     bool m_IsFruitVisible = false;
     float m_FruitTimer = 0.0f;
     float m_FruitScoreTextTimer = 0.0f;
+    float m_GhostEatPauseTimer = 0.0f;
+    float m_GhostEatScoreTextTimer = 0.0f;
     int m_CurrentFruitScore = 100;
     std::shared_ptr<Util::GameObject> m_Fruit;
     std::shared_ptr<Util::GameObject> m_FruitScoreText;
+    std::shared_ptr<Util::GameObject> m_GhostEatScoreText;
 
     static constexpr int m_FruitSpawnBeanCount = 70;
     static constexpr float m_FruitVisibleDuration = 12.0f;
     static constexpr float m_FruitScoreTextDuration = 1.0f;
+    static constexpr float m_GhostEatPauseDuration = 0.75f;
+    static constexpr float m_GhostEatScoreTextDuration = 0.75f;
 
     //成員呼叫
     Map m_Map;

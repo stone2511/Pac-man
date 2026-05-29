@@ -98,6 +98,7 @@ void Ghost::Reset(){
     m_FrightenedTimeRemaining = 0.0f;
     m_IgnoreFrightened = false;
     m_HasEnteredHouseDoor = false;
+    m_HouseIdleDir = m_HouseIdleStartDir;
     m_CurrentDir = Direction::LEFT;
     m_HouseState = HouseState::IN_HOUSE;
 }
@@ -129,6 +130,41 @@ void Ghost::RefreshDrawable(GhostState state, float frightenedTimeRemaining) {
     if (state != GhostState::FRIGHTENED && state != GhostState::EATEN) {
         PauseNormalAnimations();
     }
+}
+
+void Ghost::UpdateHouseIdle(GhostState state, float frightenedTimeRemaining) {
+    if (m_HouseState != HouseState::IN_HOUSE) {
+        RefreshDrawable(state, frightenedTimeRemaining);
+        return;
+    }
+
+    m_FrightenedTimeRemaining = frightenedTimeRemaining;
+    auto pos = m_GhostObj->m_Transform.translation;
+    const float top = m_HomePos.y + m_HouseIdleRange;
+    const float bottom = m_HomePos.y - m_HouseIdleRange;
+
+    if (m_HouseIdleDir == Direction::UP) {
+        pos.y += m_HouseIdleSpeed;
+        if (pos.y >= top) {
+            pos.y = top;
+            m_HouseIdleDir = Direction::DOWN;
+        }
+    } else {
+        pos.y -= m_HouseIdleSpeed;
+        if (pos.y <= bottom) {
+            pos.y = bottom;
+            m_HouseIdleDir = Direction::UP;
+        }
+    }
+
+    m_CurrentDir = m_HouseIdleDir;
+    m_GhostObj->m_Transform.translation = pos;
+    UpdateDrawableForState(state);
+}
+
+void Ghost::SetHouseIdleStartDirection(Direction direction) {
+    m_HouseIdleStartDir = direction;
+    m_HouseIdleDir = direction;
 }
 
 // 更新 frightened 剩餘時間，讓閃爍動畫可以依時間切換。
@@ -170,6 +206,15 @@ void Ghost::SetVisible(bool visible) {
 //回傳鬼目前是不是可見，讓碰撞檢查時能忽略已經消失的鬼。
 bool Ghost::IsVisible() const {
     return m_IsVisible;
+}
+
+void Ghost::PauseAnimation() {
+    if (m_CurrentAnimation != nullptr) {
+        m_CurrentAnimation->Pause();
+    }
+    m_FrightenedAnimation->Pause();
+    m_FrightenedWarningAnimation->Pause();
+    PauseNormalAnimations();
 }
 
 // 直接設定鬼目前在鬼屋流程中的狀態。

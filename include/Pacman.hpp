@@ -14,6 +14,7 @@ public:
     BeanEatResult Update(Map& map);    //Movement and behavior
     void Animate();
     void Draw();    //Draw
+    void UpdateQueuedDirection();
     void PauseAnimation();
     void StartDeathAnimation();
     bool IsDeathAnimationFinished() const;

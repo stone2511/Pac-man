@@ -19,8 +19,11 @@ public:
     void Draw();
     void Reset();
     void SetVisible(bool visible);
+    void SetLastEatenGhostVisible(bool visible);
+    void PauseAnimations();
     void TriggerPowerMode();
     int GetGhostEatScore() const;
+    glm::vec2 GetLastEatenGhostPosition() const;
 
     GhostCollisionResult ResolveCollision(glm::vec2 pacmanPos);
 
@@ -35,6 +38,8 @@ private:
     float m_ReleaseTimer = 0.0f;
     float m_FrightenedTimer = 0.0f;
     int m_GhostEatChain = 0;
+    int m_LastEatenGhostIndex = -1;
+    glm::vec2 m_LastEatenGhostPosition = {0.0f, 0.0f};
 
     //鬼的釋放時間
     const std::vector<float> m_Release = {0.0f, 5.0f, 10.0f, 15.0f};
