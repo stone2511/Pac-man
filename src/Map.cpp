@@ -268,6 +268,10 @@ bool Map::IsWall(float x, float y) const {
 }
 
 bool Map::IsDoor(float x, float y) const {
+    if (m_Level.empty()) {
+        return false;
+    }
+
     int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
     int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
 
@@ -342,6 +346,7 @@ BeanEatResult Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
         if (distX < eatRadius && distY < eatRadius) {
             it = m_dots.erase(it); 
             result.score += 10;
+            result.beansEaten++;
         } else {
             ++it; 
         }
@@ -356,6 +361,7 @@ BeanEatResult Map::CheckAndEatBeans(glm::vec2 pacmanPos) {
         if (distX < eatRadius && distY < eatRadius) {
             it = m_dotplus.erase(it);
             result.score += 50;
+            result.beansEaten++;
             result.atePowerPellet = true;
         } else {
             ++it;

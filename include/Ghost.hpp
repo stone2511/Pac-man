@@ -73,6 +73,7 @@ protected:
     glm::vec2 m_HomePos;
 
     bool m_IsActive = false;
+    bool m_IsVisible = true;
 
     HouseState m_HouseState = HouseState::IN_HOUSE;
 

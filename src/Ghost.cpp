@@ -104,7 +104,7 @@ void Ghost::Reset(){
 
 // 把鬼切換成被吃掉後的狀態，之後會用眼睛型態返回鬼屋。
 void Ghost::BecomeEaten() {
-    m_GhostObj->SetVisible(true);
+    SetVisible(true);
     PauseNormalAnimations();
     m_GhostObj->SetDrawable(GetEyesDrawableForDirection(m_CurrentDir));
     m_FrightenedAnimation->Pause();
@@ -163,12 +163,13 @@ bool Ghost::IsActive() const {
 
 //控制這隻鬼要不要顯示在畫面上。讓死亡流程中可以統一把鬼隱藏。
 void Ghost::SetVisible(bool visible) {
+    m_IsVisible = visible;
     m_GhostObj->SetVisible(visible);
 }
 
 //回傳鬼目前是不是可見，讓碰撞檢查時能忽略已經消失的鬼。
 bool Ghost::IsVisible() const {
-    return m_GhostObj->GetVisible();
+    return m_IsVisible;
 }
 
 void Ghost::SetSpeed(float s) {
@@ -270,7 +271,7 @@ void Ghost::UpdateDrawableForState(GhostState state) {
             m_FrightenedWarningAnimation->SetCurrentFrame(0);
         }
 
-        if (m_GhostObj->GetVisible()) {
+        if (IsVisible()) {
             frightenedDrawable->Play();
         }
         m_GhostObj->SetDrawable(frightenedDrawable);
@@ -290,7 +291,7 @@ void Ghost::UpdateDrawableForState(GhostState state) {
         m_CurrentAnimation = normalAnimation;
     }
 
-    if (m_GhostObj->GetVisible()) {
+    if (IsVisible()) {
         m_CurrentAnimation->Play();
     }
     m_GhostObj->SetDrawable(m_CurrentAnimation);

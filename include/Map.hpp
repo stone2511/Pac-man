@@ -9,6 +9,7 @@
 
 struct BeanEatResult {
     int score = 0;
+    int beansEaten = 0;
     bool atePowerPellet = false;
 };
 
