@@ -11,6 +11,7 @@
 #include "Pacman.hpp"
 #include "Scoreboard.hpp"
 #include "GhostManager.hpp"
+#include "LevelConfig.hpp"
 
 #include <string>
 
@@ -29,6 +30,8 @@ public:
 
     State GetCurrentState() const { return m_CurrentState; }
     // 目前狀態的Getter
+
+    LevelConfig GetLevelConfig(int level);
 
     void Start();
 

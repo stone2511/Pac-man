@@ -7,7 +7,7 @@
 #include <cmath>
 #include <utility>
 
-void Map::Start(int level) {
+void Map::Start(int mapIndex) {
     m_Blocks.clear();
     m_dots.clear();
     m_dotplus.clear();
@@ -16,7 +16,6 @@ void Map::Start(int level) {
     m_IsPowerPelletVisible = true;
 
     //Map
-    int mapIndex = (level-1) % 5;
     switch(mapIndex){
         case 0:
             m_Level = {
@@ -43,7 +42,6 @@ void Map::Start(int level) {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
             };
             break;
-
         case 1:
             m_Level = {
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -288,8 +286,8 @@ bool Map::IsDoor(float x, float y) const {
     int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
     int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
 
-    if (gridY < 0 || gridY >= static_cast<int>(m_Level.size()) ||
-        gridX < 0 || gridX >= static_cast<int>(m_Level[gridY].size())) {
+    if (gridX < 0 || gridX >= m_Level[0].size() || 
+        gridY < 0 || gridY >= m_Level.size()) {
         return false;
     }
 
@@ -407,6 +405,7 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
         return false;
     }
 
+    
     const float leftEdge = m_StartX - (m_GridSize / 2.0f);
     const float rightEdge =
         m_StartX + (static_cast<float>(m_Level[0].size()) * m_GridSize) -
@@ -417,11 +416,13 @@ bool Map::TryWrapTunnel(glm::vec2& pos, float radius) const {
 
     if (pos.x - radius <= leftEdge) {
         pos.x = rightEntranceX;
+
         return true;
     }
 
     if (pos.x + radius >= rightEdge) {
         pos.x = leftEntranceX;
+
         return true;
     }
 

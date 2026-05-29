@@ -49,6 +49,7 @@ public:
     bool IsActive() const;
     void SetVisible(bool visible);
     bool IsVisible() const;
+    void SetSpeed(float s);
     void PauseAnimation();
 
     void SetHouseState(HouseState s);
