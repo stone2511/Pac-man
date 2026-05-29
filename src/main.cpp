@@ -24,6 +24,10 @@ int main(int, char**) {
                 app.Reset();
                 break;
 
+            case App::State::EATING_GHOST:
+                app.EatingGhost();
+                break;
+
             case App::State::DYING:
                 app.Dying();
                 break;

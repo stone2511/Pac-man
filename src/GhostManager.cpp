@@ -91,7 +91,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
             m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, blinkyPos, ghostState);
         }
         else{
-            m_Ghosts[i]->RefreshDrawable(ghostState, frightenedTimeRemaining);
+            m_Ghosts[i]->UpdateHouseIdle(ghostState, frightenedTimeRemaining);
         }
     }
 }
@@ -126,6 +126,8 @@ void GhostManager::Reset(LevelConfig config){
     m_ReleaseTimer = 0.0f;
     m_FrightenedTimer = 0.0f;
     m_GhostEatChain = 0;
+    m_LastEatenGhostIndex = -1;
+    m_LastEatenGhostPosition = {0.0f, 0.0f};
     SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
@@ -134,6 +136,45 @@ void GhostManager::Reset(LevelConfig config){
         m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
     }
 }
+
+void GhostManager::SetLastEatenGhostVisible(bool visible) {
+    if (m_LastEatenGhostIndex < 0 || m_LastEatenGhostIndex >= static_cast<int>(m_Ghosts.size()))
+    {
+        return;
+    }
+
+    m_Ghosts[m_LastEatenGhostIndex]->SetVisible(visible);
+}
+
+void GhostManager::PauseAnimations() {
+    for (auto& ghost : m_Ghosts) {
+        ghost->PauseAnimation();
+    }
+}
+/*
+void GhostManager::Reset(LevelConfig config){
+    if (m_Ghosts.empty()) {
+        return;
+    }
+
+    m_NormalState = GhostState::SCATTER;
+    m_CurrentState = GhostState::SCATTER;
+    m_StateTimer = 0.0f;
+    m_ReleaseTimer = 0.0f;
+    m_FrightenedTimer = 0.0f;
+    m_GhostEatChain = 0;
+    m_LastEatenGhostIndex = -1;
+    m_LastEatenGhostPosition = {0.0f, 0.0f};
+    SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
+
+    for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
+        m_Ghosts[i]->Reset();
+        m_Ghosts[i]->SetIsActive(i==0);
+        m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
+    }
+}
+*/
+
 
 void GhostManager::TriggerPowerMode() {
     m_CurrentState = GhostState::FRIGHTENED;
@@ -158,10 +199,15 @@ int GhostManager::GetGhostEatScore() const {
     return 200 * (1 << (m_GhostEatChain - 1));
 }
 
+glm::vec2 GhostManager::GetLastEatenGhostPosition() const {
+    return m_LastEatenGhostPosition;
+}
+
 GhostCollisionResult GhostManager::ResolveCollision(glm::vec2 pacmanPos) {
     float death_radius = 18.0f;
 
-    for (auto& ghost : m_Ghosts){
+    for (size_t i = 0; i < m_Ghosts.size(); ++i){
+        auto& ghost = m_Ghosts[i];
         //檢查 Pacman 是否碰到任何鬼。只會檢查「已啟用而且可見」的鬼，所以鬼消失後不會再重複判定碰撞。
         if (!ghost->IsActive() || !ghost->IsVisible() || ghost->IsReturningToHouse()) {
             continue;
@@ -171,6 +217,8 @@ GhostCollisionResult GhostManager::ResolveCollision(glm::vec2 pacmanPos) {
 
         if(distance < death_radius){
             if (m_CurrentState == GhostState::FRIGHTENED && !ghost->IgnoresFrightened()) {
+                m_LastEatenGhostIndex = static_cast<int>(i);
+                m_LastEatenGhostPosition = ghost->GetPosition();
                 ghost->BecomeEaten();
                 ++m_GhostEatChain;
                 return GhostCollisionResult::GHOST_EATEN;

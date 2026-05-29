@@ -54,6 +54,9 @@ void App::DrawGameplay() {
     m_Scoreboard.Draw();
     m_Pacman.Draw();
     m_GhostManager.Draw();
+    if (m_GhostEatScoreText != nullptr) {
+        m_GhostEatScoreText->Draw();
+    }
 }
 
 bool App::HandleLevelShortcut() {
@@ -118,6 +121,9 @@ void App::ResetFruit() {
     m_FruitTimer = 0.0f;
     m_FruitScoreTextTimer = 0.0f;
     m_FruitScoreText = nullptr;
+    m_GhostEatPauseTimer = 0.0f;
+    m_GhostEatScoreTextTimer = 0.0f;
+    m_GhostEatScoreText = nullptr;
     LoadFruitForLevel();
 }
 
@@ -183,6 +189,31 @@ void App::UpdateFruitScoreText() {
     if (m_FruitScoreTextTimer >= m_FruitScoreTextDuration) {
         m_FruitScoreText = nullptr;
         m_FruitScoreTextTimer = 0.0f;
+    }
+}
+
+void App::ShowGhostEatScore(glm::vec2 position, int score) {
+    m_GhostEatScoreText = std::make_shared<Util::GameObject>();
+    m_GhostEatScoreText->SetDrawable(std::make_shared<Util::Text>(
+        RESOURCE_DIR"/font/inkfree.ttf",
+        12,
+        std::to_string(score),
+        Util::Color::FromName(Util::Colors::WHITE)
+    ));
+    m_GhostEatScoreText->m_Transform.translation = position;
+    m_GhostEatScoreText->SetZIndex(20);
+    m_GhostEatScoreTextTimer = 0.0f;
+}
+
+void App::UpdateGhostEatScoreText() {
+    if (m_GhostEatScoreText == nullptr) {
+        return;
+    }
+
+    m_GhostEatScoreTextTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
+    if (m_GhostEatScoreTextTimer >= m_GhostEatScoreTextDuration) {
+        m_GhostEatScoreText = nullptr;
+        m_GhostEatScoreTextTimer = 0.0f;
     }
 }
 
@@ -295,13 +326,43 @@ void App::Update() {
         if (collisionResult == GhostCollisionResult::PACMAN_DIED) {
             StartDeathSequence();
         } else if (collisionResult == GhostCollisionResult::GHOST_EATEN) {
-            m_Scoreboard.AddScore(m_GhostManager.GetGhostEatScore());
+            const int ghostEatScore = m_GhostManager.GetGhostEatScore();
+            m_Scoreboard.AddScore(ghostEatScore);
+            ShowGhostEatScore(m_GhostManager.GetLastEatenGhostPosition(), ghostEatScore);
+            m_GhostManager.SetLastEatenGhostVisible(false);
+            m_GhostManager.PauseAnimations();
+            m_Pacman.PauseAnimation();
+            m_GhostEatPauseTimer = 0.0f;
+            m_CurrentState = State::EATING_GHOST;
         }
     }
     /*
      * Do not touch the code below as they serve the purpose for
      * closing the window.
      */
+    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
+        Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+    }
+}
+
+void App::EatingGhost() {
+    if (HandleLevelShortcut()) {
+        return;
+    }
+
+    m_GhostEatPauseTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
+    m_Pacman.UpdateQueuedDirection();
+    UpdateFruitScoreText();
+    UpdateGhostEatScoreText();
+    DrawGameplay();
+
+    if (m_GhostEatPauseTimer >= m_GhostEatPauseDuration) {
+        m_GhostManager.SetLastEatenGhostVisible(true);
+        m_GhostEatPauseTimer = 0.0f;
+        m_CurrentState = State::UPDATE;
+    }
+
     if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
         Util::Input::IfExit()) {
         m_CurrentState = State::END;

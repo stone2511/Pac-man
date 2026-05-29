@@ -45,6 +45,10 @@ private:
     std::vector<std::shared_ptr<Util::GameObject>> m_dotplus;
     std::vector<std::shared_ptr<Util::GameObject>> m_door;
 
+    float m_PowerPelletBlinkTimer = 0.0f;
+    bool m_IsPowerPelletVisible = true;
+    static constexpr float m_PowerPelletBlinkInterval = 0.25f;
+
     float m_GridSize = 32.0f;
     float m_StartX;
     float m_StartY;

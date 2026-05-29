@@ -1,6 +1,7 @@
 #include "Map.hpp"
 #include "Util/Logger.hpp"
 #include "Util/Image.hpp"
+#include "Util/Time.hpp"
 #include <imgui.h>
 #include <string>
 #include <cmath>
@@ -11,6 +12,8 @@ void Map::Start(int mapIndex) {
     m_dots.clear();
     m_dotplus.clear();
     m_door.clear();
+    m_PowerPelletBlinkTimer = 0.0f;
+    m_IsPowerPelletVisible = true;
 
     //Map
     switch(mapIndex){
@@ -52,14 +55,14 @@ void Map::Start(int mapIndex) {
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
                 {1, 2, 2, 2, 1, 2, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 2, 2, 2, 1}, // Ghost room below
                 {1, 2, 1, 2, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 2, 1, 2, 1},
-                {1, 2, 1, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 2, 1},
+                {1, 2, 1, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 1, 2, 1},
                 {1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
                 {1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1},
                 {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
-                {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
+                {1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
             };
@@ -78,7 +81,7 @@ void Map::Start(int mapIndex) {
                 {1, 2, 2, 2, 1, 2, 2, 2, 1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 2, 1}, // Ghost room below
                 {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1},
                 {1, 2, 1, 2, 0, 0, 1, 2, 0, 0, 0, 0, 0, 2, 1, 0, 0, 2, 1, 2, 1},
-                {1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1},
+                {1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1},
                 {1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1},
@@ -236,14 +239,22 @@ void Map::Start(int mapIndex) {
 }
 
 void Map::Draw() {
+    m_PowerPelletBlinkTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
+    if (m_PowerPelletBlinkTimer >= m_PowerPelletBlinkInterval) {
+        m_PowerPelletBlinkTimer = 0.0f;
+        m_IsPowerPelletVisible = !m_IsPowerPelletVisible;
+    }
+
     for (auto& block : m_Blocks) {
         block->Draw();
     }
     for (auto& dot : m_dots) {
         dot->Draw();
     }
-    for (auto& dotplus : m_dotplus) {
-        dotplus->Draw();
+    if (m_IsPowerPelletVisible) {
+        for (auto& dotplus : m_dotplus) {
+            dotplus->Draw();
+        }
     }
     for (auto& door : m_door) {
         door->Draw();

@@ -45,15 +45,7 @@ BeanEatResult Pacman::Update(Map& map) {
     //Pacman coordinate
     auto pos = m_Pacman->m_Transform.translation;
 
-    if (Util::Input::IsKeyDown(Util::Keycode::W)) {
-        m_QueuedDirection = Direction::UP;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
-        m_QueuedDirection = Direction::DOWN;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
-        m_QueuedDirection = Direction::LEFT;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
-        m_QueuedDirection = Direction::RIGHT;
-    }
+    UpdateQueuedDirection();
 
     // Turn as soon as the requested direction becomes available.
     const auto queuedPos = pos + GetDirectionOffset(m_QueuedDirection);
@@ -82,6 +74,18 @@ BeanEatResult Pacman::Update(Map& map) {
 
 void Pacman::Draw() {
     m_Pacman->Draw();
+}
+
+void Pacman::UpdateQueuedDirection() {
+    if (Util::Input::IsKeyDown(Util::Keycode::W)) {
+        m_QueuedDirection = Direction::UP;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
+        m_QueuedDirection = Direction::DOWN;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
+        m_QueuedDirection = Direction::LEFT;
+    } else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
+        m_QueuedDirection = Direction::RIGHT;
+    }
 }
 
 //暫停動畫，讓 Pacman 保持在當前幀。死亡動畫會切換到專用的動畫並播放，其他時候則根據移動方向切換動畫。
