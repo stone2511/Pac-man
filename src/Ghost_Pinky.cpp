@@ -2,6 +2,7 @@
 
 Ghost_Pinky::Ghost_Pinky(glm::vec2 worldPos) 
     : Ghost("pinky", worldPos) {
+    SetHouseIdleStartDirection(Direction::DOWN);
 }
 
 void Ghost_Pinky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) {
