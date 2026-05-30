@@ -286,7 +286,18 @@ void Ghost::UpdateMovement(const Map& map, glm::vec2 targetPos, GhostState state
     }
 
     if (m_CurrentDir != Direction::NONE && CanMoveDirection(map, pos, m_CurrentDir, speed)) {
-        pos += GetDirectionVector(m_CurrentDir, speed);
+        float remainingDistance = speed;
+        constexpr float maxStepDistance = 2.0f;
+        while (remainingDistance > 0.0f) {
+            const float stepDistance = std::min(remainingDistance, maxStepDistance);
+            if (!CanMoveDirection(map, pos, m_CurrentDir, stepDistance)) {
+                break;
+            }
+
+            pos += GetDirectionVector(m_CurrentDir, stepDistance);
+            map.TryWrapTunnel(pos, 14.0f);
+            remainingDistance -= stepDistance;
+        }
     }
     map.TryWrapTunnel(pos, 14.0f);
     UpdateDrawableForState(state);
@@ -586,7 +597,8 @@ bool Ghost::CanMoveDirection(const Map& map, glm::vec2 pos, Direction direction,
     }
 
     const float radius = 14.0f;
-    const glm::vec2 nextPos = pos + GetDirectionVector(direction, distance);
+    glm::vec2 nextPos = pos + GetDirectionVector(direction, distance);
+    map.TryWrapTunnel(nextPos, radius);
 
     const bool hitsWall =
         map.IsWall(nextPos.x - radius, nextPos.y + radius) ||

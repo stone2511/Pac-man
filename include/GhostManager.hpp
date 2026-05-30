@@ -29,6 +29,8 @@ public:
     GhostCollisionResult ResolveCollision(glm::vec2 pacmanPos);
 
 private:
+    void Reset();
+
     std::vector<std::shared_ptr<Ghost>> m_Ghosts;
 
     GhostState m_CurrentState = GhostState::SCATTER;

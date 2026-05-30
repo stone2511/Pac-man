@@ -1,5 +1,6 @@
 set(SRC_FILES
     App.cpp
+    fruit.cpp
     Map.cpp
     Pacman.cpp
     Scoreboard.cpp
@@ -13,6 +14,7 @@ set(SRC_FILES
 
 set(INCLUDE_FILES
     App.hpp
+    fruit.hpp
     Map.hpp
     Pacman.hpp
     Scoreboard.hpp

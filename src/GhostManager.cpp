@@ -115,6 +115,8 @@ void GhostManager::Reset(LevelConfig config){
     for (auto& ghost : m_Ghosts){
         ghost->SetSpeed(config.ghostSpeed);
     }
+    Reset();
+}
 
 void GhostManager::SetLastEatenGhostVisible(bool visible) {
     if (m_LastEatenGhostIndex < 0 ||
