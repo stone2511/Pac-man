@@ -35,6 +35,7 @@ public:
     glm::vec2 GetClosestGridCenter(float x, float y) const;
 
 private:
+    std::shared_ptr<Util::GameObject> CreateTileObject(const std::string& texturePath, std::size_t x, std::size_t y) const;
     bool IsTunnelRow(int gridY) const;
     bool HasTunnelEntrance(int gridY, int startX, int step) const;
 

@@ -30,6 +30,9 @@ public:
 
 private:
     void Reset();
+    void ResetStateTimers();
+    void ResetGhostsForNewLife();
+    GhostState GetEffectiveStateForGhost(const std::shared_ptr<Ghost>& ghost) const;
 
     std::vector<std::shared_ptr<Ghost>> m_Ghosts;
 

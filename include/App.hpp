@@ -49,18 +49,16 @@ public:
 private:
     void DrawGameplay();
     bool HandleLevelShortcut();
+    bool HandleExitInput();
     void LoadLevel(int newLevel);
     void StartDeathSequence();
     void ResetDeathSequence();
     void ResetFruit();
     void ShowGhostEatScore(glm::vec2 position, int score);
     void UpdateGhostEatScoreText();
-    void ValidTask();
-
+    void DrawGameText(const std::string& message);
     void DrawVictory(); //勝利字串
-
     void DrawDead();    //死亡字串
-
     void DrawGameover();    //遊戲結束字串
 
 private:
@@ -69,7 +67,7 @@ private:
     std::shared_ptr<Util::GameObject> m_GameText;
 
     //分數和計時器
-    float GameOverTimer = 0.0f;
+    float m_GameOverTimer = 0.0f;
     int level = 1;
     float m_DeathSequenceTimer = 0.0f;
     bool m_HasHiddenGhosts = false;

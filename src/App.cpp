@@ -10,11 +10,15 @@
 LevelConfig App::GetLevelConfig(int level){
     LevelConfig config;
     config.mapIndex = (level-1) % 5;
-    int l;
-    if(level>=10) l = 1;
-    else if(level>=20) l = 2;
-    else l = 0;
-    config.ghostSpeed = 2.0f + (l*0.5f);
+
+    int difficultyTier = 0;
+    if(level >= 20) {
+        difficultyTier = 2;
+    } else if(level >= 10) {
+        difficultyTier = 1;
+    }
+
+    config.ghostSpeed = 2.0f + (difficultyTier * 0.5f);
     if(config.ghostSpeed >= 4.0f) config.ghostSpeed = 4.0f;
 
     config.frightenedDuration = 8.0f - (level * 0.25f);
@@ -84,12 +88,24 @@ bool App::HandleLevelShortcut() {
     return false;
 }
 
+bool App::HandleExitInput() {
+    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
+        Util::Input::IfExit()) {
+        m_CurrentState = State::END;
+        return true;
+    }
+
+    return false;
+}
+
 void App::LoadLevel(int newLevel) {
     level = newLevel;
+    const LevelConfig config = GetLevelConfig(level);
     m_Scoreboard.SetLevel(level);
-    m_Map.Start(level);
+    m_Map.Start(config.mapIndex);
     m_Pacman.Reset();
     m_GhostManager.Start(m_Map);
+    m_GhostManager.Reset(config);
     ResetDeathSequence();
     ResetFruit();
     m_CurrentState = State::UPDATE;
@@ -200,14 +216,7 @@ void App::Update() {
             m_CurrentState = State::EATING_GHOST;
         }
     }
-    /*
-     * Do not touch the code below as they serve the purpose for
-     * closing the window.
-     */
-    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
-        Util::Input::IfExit()) {
-        m_CurrentState = State::END;
-    }
+    HandleExitInput();
 }
 
 void App::EatingGhost() {
@@ -227,10 +236,7 @@ void App::EatingGhost() {
         m_CurrentState = State::UPDATE;
     }
 
-    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
-        Util::Input::IfExit()) {
-        m_CurrentState = State::END;
-    }
+    HandleExitInput();
 }
 
 void App::Dying() {
@@ -256,10 +262,7 @@ void App::Dying() {
         m_CurrentState = State::DEAD;
     }
 
-    if (Util::Input::IsKeyUp(Util::Keycode::ESCAPE) ||
-        Util::Input::IfExit()) {
-        m_CurrentState = State::END;
-    }
+    HandleExitInput();
 }
 
 void App::Reset() {
@@ -308,53 +311,42 @@ void App::Dead() {
 
 void App::Gameover() {
     if (HandleLevelShortcut()) {
-        GameOverTimer = 0.0f;
+        m_GameOverTimer = 0.0f;
         return;
     }
 
     DrawGameover();
     m_GameText->Draw();
 
-    GameOverTimer+=0.016f;
+    m_GameOverTimer += Util::Time::GetDeltaTimeMs() / 1000.0f;
 
-    //1/60=0.016
     //差不多兩秒
-    if(GameOverTimer > 2.0f){
+    if(m_GameOverTimer > 2.0f){
         m_CurrentState = State::END;
     }
 }
 
-void App::DrawVictory() {
+void App::DrawGameText(const std::string& message) {
     m_GameText = std::make_shared<Util::GameObject>();
     m_GameText->SetDrawable(std::make_shared<Util::Text>(
-        RESOURCE_DIR"/font/inkfree.ttf", 
-        25, 
-        "Victory(Press Tab to NextLevel)", 
+        RESOURCE_DIR"/font/inkfree.ttf",
+        25,
+        message,
         Util::Color::FromName(Util::Colors::YELLOW)
     ));
     m_GameText->m_Transform.translation = {0.0f, 0.0f};
+}
+
+void App::DrawVictory() {
+    DrawGameText("Victory(Press Tab to NextLevel)");
 }
 
 void App::DrawDead() {
-    m_GameText = std::make_shared<Util::GameObject>();
-    m_GameText->SetDrawable(std::make_shared<Util::Text>(
-        RESOURCE_DIR"/font/inkfree.ttf", 
-        25, 
-        "You dead. (Press Tab to Continue)", 
-        Util::Color::FromName(Util::Colors::YELLOW)
-    ));
-    m_GameText->m_Transform.translation = {0.0f, 0.0f};
+    DrawGameText("You dead. (Press Tab to Continue)");
 }
 
 void App::DrawGameover(){
-    m_GameText = std::make_shared<Util::GameObject>();
-    m_GameText->SetDrawable(std::make_shared<Util::Text>(
-        RESOURCE_DIR"/font/inkfree.ttf", 
-        25, 
-        "Game Over!!!", 
-        Util::Color::FromName(Util::Colors::YELLOW)
-    ));
-    m_GameText->m_Transform.translation = {0.0f, 0.0f};
+    DrawGameText("Game Over!!!");
 }
 
 void App::End() { // NOLINT(this method will mutate members in the future)
