@@ -10,6 +10,7 @@ set(SRC_FILES
     Ghost_Clyde.cpp
     GhostManager.cpp
     Ghost.cpp
+    GhostMovement.cpp
 )
 
 set(INCLUDE_FILES
