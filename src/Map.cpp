@@ -28,7 +28,7 @@ void Map::Start(int mapIndex) {
                 {1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 1},
                 {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0},
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
-                {2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2, 2}, //tunnel
+                {0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0}, //tunnel
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
                 {0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 0, 0, 0, 0},
                 {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
@@ -100,13 +100,13 @@ void Map::Start(int mapIndex) {
                 {1, 3, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1, 2, 2, 3, 1},
                 {1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1},
                 {1, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 1},
-                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1},
                 {1, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 1},
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
-                {2, 2, 2, 2, 2, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 2, 2, 2, 2, 2}, // Tunnel
+                {0, 0, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 0, 0}, // Tunnel
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
                 {1, 2, 2, 2, 1, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 1, 2, 2, 2, 1},
-                {1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 1, 1},
+                {1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1},
                 {1, 3, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 3, 1},
@@ -123,9 +123,9 @@ void Map::Start(int mapIndex) {
                 {1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1},
                 {1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1},
                 {1, 3, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 3, 1},
-                {1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1},
+                {1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1},
                 {1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1},
-                {1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1},
+                {1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1},
                 {0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 0}, // Tunnel
                 {1, 1, 1, 1, 1, 2, 1, 0, 1, 1, 4, 1, 1, 0, 1, 2, 1, 1, 1, 1, 1},
                 {1, 2, 2, 2, 1, 2, 1, 0, 1, 0, 0, 0, 1, 0, 1, 2, 1, 2, 2, 2, 1},
@@ -192,50 +192,35 @@ void Map::Start(int mapIndex) {
                     RESOURCE_DIR"/Image/backround/wall1110.png",
                 };
 
-                auto block = std::make_shared<Util::GameObject>();
-
-                block->SetDrawable(std::make_shared<Util::Image>(wallTextures[wallID]));
-    
-                block->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
-                block->SetZIndex(0);
-                m_Blocks.push_back(block);
+                m_Blocks.push_back(CreateTileObject(wallTextures[wallID], x, y));
             }
 
             else if (m_Level[y][x] == 2) {
-                auto dot = std::make_shared<Util::GameObject>();
-            
-                dot->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dot.png"));
-                
-                dot->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
-                dot->SetZIndex(0);
-                
-                m_dots.push_back(dot);
+                m_dots.push_back(CreateTileObject(RESOURCE_DIR"/Image/backround/dot.png", x, y));
             }
 
             else if (m_Level[y][x] == 3) {
-                auto dotplus = std::make_shared<Util::GameObject>();
-            
-                dotplus->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/dotplus.png"));
-                
-                dotplus->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
-                dotplus->SetZIndex(0);
-                
-                m_dotplus.push_back(dotplus);
+                m_dotplus.push_back(CreateTileObject(RESOURCE_DIR"/Image/backround/dotplus.png", x, y));
             }
 
             else if (m_Level[y][x] == 4) {
-                auto door = std::make_shared<Util::GameObject>();
-            
-                door->SetDrawable(std::make_shared<Util::Image>(RESOURCE_DIR"/Image/backround/door.png"));
-                
-                door->m_Transform.translation = {m_StartX + (static_cast<float>(x) * m_GridSize), m_StartY - (static_cast<float>(y) * m_GridSize)};
-                door->SetZIndex(0);
-                
-                m_door.push_back(door);
+                m_door.push_back(CreateTileObject(RESOURCE_DIR"/Image/backround/door.png", x, y));
             }
         }
     }
 
+}
+
+std::shared_ptr<Util::GameObject> Map::CreateTileObject(
+    const std::string& texturePath,
+    std::size_t x,
+    std::size_t y
+) const {
+    auto tile = std::make_shared<Util::GameObject>();
+    tile->SetDrawable(std::make_shared<Util::Image>(texturePath));
+    tile->m_Transform.translation = GridToWorld(static_cast<float>(x), static_cast<float>(y));
+    tile->SetZIndex(0);
+    return tile;
 }
 
 void Map::Draw() {
@@ -286,8 +271,8 @@ bool Map::IsDoor(float x, float y) const {
     int gridX = static_cast<int>((x - m_StartX + (m_GridSize / 2.0f)) / m_GridSize);
     int gridY = static_cast<int>((m_StartY - y + (m_GridSize / 2.0f)) / m_GridSize);
 
-    if (gridX < 0 || gridX >= m_Level[0].size() || 
-        gridY < 0 || gridY >= m_Level.size()) {
+    if (gridX < 0 || gridX >= static_cast<int>(m_Level[0].size()) ||
+        gridY < 0 || gridY >= static_cast<int>(m_Level.size())) {
         return false;
     }
 

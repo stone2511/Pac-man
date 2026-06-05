@@ -7,37 +7,25 @@
 
 void GhostManager::Start(const Map& map) {
     m_Ghosts.clear();
+
     auto blinky = std::make_shared<Ghost_Blinky>(map.GridToWorld(10.0f, 7.0f));
     blinky->SetHomePosition(map.GridToWorld(10.0f, 9.0f));
     m_Ghosts.push_back(blinky);
+
     auto pinky = std::make_shared<Ghost_Pinky>(map.GridToWorld(10.0f, 9.0f));
     pinky->SetHomePosition(map.GridToWorld(10.0f, 9.0f));
     m_Ghosts.push_back(pinky);
+
     auto inky = std::make_shared<Ghost_Inky>(map.GridToWorld(8.9f, 9.0f));
     inky->SetHomePosition(map.GridToWorld(9.0f, 9.0f));
     m_Ghosts.push_back(inky);
+
     auto clyde = std::make_shared<Ghost_Clyde>(map.GridToWorld(11.1f, 9.0f));
     clyde->SetHomePosition(map.GridToWorld(11.0f, 9.0f));
     m_Ghosts.push_back(clyde);
-    //LevelConfig config;
-    //Reset(config);
-    if (m_Ghosts.empty()) {
-        return;
-    }
 
-    m_NormalState = GhostState::SCATTER;
-    m_CurrentState = GhostState::SCATTER;
-    m_StateTimer = 0.0f;
-    m_ReleaseTimer = 0.0f;
-    m_FrightenedTimer = 0.0f;
-    m_GhostEatChain = 0;
-    SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
-
-    for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
-        m_Ghosts[i]->Reset();
-        m_Ghosts[i]->SetIsActive(i==0);
-        m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
-    }
+    ResetStateTimers();
+    ResetGhostsForNewLife();
 }
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, int level) {
@@ -66,32 +54,26 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
         m_CurrentState = m_NormalState;
     }
 
-    glm::vec2 blinkyPos = m_Ghosts[0]->GetPosition();
+    const glm::vec2 blinkyPos = m_Ghosts[0]->GetPosition();
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i) {
-        if(!m_Ghosts[i]->IsActive() && m_ReleaseTimer >= m_Release[i]){
-            m_Ghosts[i]->SetIsActive(true);
-            m_Ghosts[i]->SetHouseState(HouseState::EXITING);
+        auto& ghost = m_Ghosts[i];
+
+        if(!ghost->IsActive() && m_ReleaseTimer >= m_Release[i]){
+            ghost->SetIsActive(true);
+            ghost->SetHouseState(HouseState::EXITING);
         }
 
-        GhostState ghostState = m_CurrentState;
-        if (m_Ghosts[i]->IsReturningToHouse()) {
-            ghostState = GhostState::EATEN;
-        }
-
-        if (ghostState == GhostState::FRIGHTENED && m_Ghosts[i]->IgnoresFrightened()) {
-            ghostState = m_NormalState;
-        }
-
+        const GhostState ghostState = GetEffectiveStateForGhost(ghost);
         const float frightenedTimeRemaining =
             ghostState == GhostState::FRIGHTENED ? m_FrightenedTimer : 0.0f;
 
-        if(m_Ghosts[i]->IsActive()){
-            m_Ghosts[i]->SetFrightenedTimeRemaining(frightenedTimeRemaining);
-            m_Ghosts[i]->Update(map, pacmanPos, pacmanDir, blinkyPos, ghostState);
+        if(ghost->IsActive()){
+            ghost->SetFrightenedTimeRemaining(frightenedTimeRemaining);
+            ghost->Update(map, pacmanPos, pacmanDir, blinkyPos, ghostState);
         }
         else{
-            m_Ghosts[i]->UpdateHouseIdle(ghostState, frightenedTimeRemaining);
+            ghost->UpdateHouseIdle(ghostState, frightenedTimeRemaining);
         }
     }
 }
@@ -115,11 +97,16 @@ void GhostManager::Reset(LevelConfig config){
     for (auto& ghost : m_Ghosts){
         ghost->SetSpeed(config.ghostSpeed);
     }
-
+    
     if (m_Ghosts.empty()) {
         return;
     }
 
+    ResetStateTimers();
+    ResetGhostsForNewLife();
+}
+
+void GhostManager::ResetStateTimers() {
     m_NormalState = GhostState::SCATTER;
     m_CurrentState = GhostState::SCATTER;
     m_StateTimer = 0.0f;
@@ -128,6 +115,9 @@ void GhostManager::Reset(LevelConfig config){
     m_GhostEatChain = 0;
     m_LastEatenGhostIndex = -1;
     m_LastEatenGhostPosition = {0.0f, 0.0f};
+}
+
+void GhostManager::ResetGhostsForNewLife() {
     SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
 
     for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
@@ -151,30 +141,18 @@ void GhostManager::PauseAnimations() {
         ghost->PauseAnimation();
     }
 }
-/*
-void GhostManager::Reset(LevelConfig config){
-    if (m_Ghosts.empty()) {
-        return;
+
+GhostState GhostManager::GetEffectiveStateForGhost(const std::shared_ptr<Ghost>& ghost) const {
+    if (ghost->IsReturningToHouse()) {
+        return GhostState::EATEN;
     }
 
-    m_NormalState = GhostState::SCATTER;
-    m_CurrentState = GhostState::SCATTER;
-    m_StateTimer = 0.0f;
-    m_ReleaseTimer = 0.0f;
-    m_FrightenedTimer = 0.0f;
-    m_GhostEatChain = 0;
-    m_LastEatenGhostIndex = -1;
-    m_LastEatenGhostPosition = {0.0f, 0.0f};
-    SetVisible(true);//避免上一條命死掉後鬼還保持隱藏。
-
-    for(size_t i=0 ; i<m_Ghosts.size() ; ++i){
-        m_Ghosts[i]->Reset();
-        m_Ghosts[i]->SetIsActive(i==0);
-        m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
+    if (m_CurrentState == GhostState::FRIGHTENED && ghost->IgnoresFrightened()) {
+        return m_NormalState;
     }
+
+    return m_CurrentState;
 }
-*/
-
 
 void GhostManager::TriggerPowerMode() {
     m_CurrentState = GhostState::FRIGHTENED;

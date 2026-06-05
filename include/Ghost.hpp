@@ -61,6 +61,8 @@ protected:
     void UpdateDrawableForState(GhostState state);
     void SetHouseIdleStartDirection(Direction direction);
     void PauseNormalAnimations();
+    void ResetSpecialAnimations();
+    void ResetMovementState();
     std::shared_ptr<Util::Animation> GetNormalAnimationForDirection(Direction direction) const;
     std::shared_ptr<Core::Drawable> GetEyesDrawableForDirection(Direction direction) const;
     bool HandleExitHouse(const Map& map, glm::vec2& pos, GhostState state);
