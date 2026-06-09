@@ -52,7 +52,6 @@ void Scoreboard::Draw() {
     m_LivesText->Draw();
 }
 
-
 void Scoreboard::NextLevel() {
     m_Level++;
     SetLevel(m_Level);
@@ -71,7 +70,6 @@ void Scoreboard::SetLevel(int level) {
 int Scoreboard::GetLevel(){
     return m_Level;
 }
-
 
 void Scoreboard::UpdateScoreText() {
     m_ScoreText->SetDrawable(std::make_shared<Util::Text>(

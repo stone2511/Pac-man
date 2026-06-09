@@ -5,6 +5,10 @@ Ghost_Inky::Ghost_Inky(glm::vec2 worldPos)
 }
 
 void Ghost_Inky::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, glm::vec2 blinkyPos, GhostState state) {
+    
+    //Inky演算法最為複雜
+    //是依據Blinky位置到玩家前方兩個單位為向量
+    //將該向量延長1倍的終點為target計算最短路徑
     glm::vec2 targetPos = {999.0f, -999.0f};
     if (state == GhostState::CHASE) {
         const float offset = 2.0f * 32.0f;

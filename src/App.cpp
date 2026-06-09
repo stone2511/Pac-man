@@ -12,6 +12,7 @@ LevelConfig App::GetLevelConfig(int level){
     config.mapIndex = (level-1) % 5;
 
     int difficultyTier = level/5;
+    
     /*
     if(level >= 5){
         difficultyTier = 1;

@@ -33,7 +33,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
     m_ReleaseTimer += deltaTime;
 
     float scatter_time = 7.0f - level*0.5f;
-    if(scatter_time<=1.0)  scatter_time =  1.0f;
+    if(scatter_time<=1.0f)  scatter_time =  1.0f;
 
     if (m_CurrentState == GhostState::FRIGHTENED) {
         m_FrightenedTimer -= deltaTime;
