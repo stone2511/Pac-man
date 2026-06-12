@@ -77,13 +77,17 @@ void Pacman::Draw() {
 }
 
 void Pacman::UpdateQueuedDirection() {
-    if (Util::Input::IsKeyDown(Util::Keycode::W)) {
+    if (Util::Input::IsKeyDown(Util::Keycode::W) ||
+        Util::Input::IsKeyDown(Util::Keycode::UP)) {
         m_QueuedDirection = Direction::UP;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::S)) {
+    } else if (Util::Input::IsKeyDown(Util::Keycode::S) ||
+               Util::Input::IsKeyDown(Util::Keycode::DOWN)) {
         m_QueuedDirection = Direction::DOWN;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::A)) {
+    } else if (Util::Input::IsKeyDown(Util::Keycode::A) ||
+               Util::Input::IsKeyDown(Util::Keycode::LEFT)) {
         m_QueuedDirection = Direction::LEFT;
-    } else if (Util::Input::IsKeyDown(Util::Keycode::D)) {
+    } else if (Util::Input::IsKeyDown(Util::Keycode::D) ||
+               Util::Input::IsKeyDown(Util::Keycode::RIGHT)) {
         m_QueuedDirection = Direction::RIGHT;
     }
 }
