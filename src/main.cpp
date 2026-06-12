@@ -1,13 +1,12 @@
 #include "App.hpp"
 
 #include "Core/Context.hpp"
-
-//#include "Util/Logger.hpp"
+#include "Util/Logger.hpp"
 
 int main(int, char**) {
-    //Util::Logger::SetLevel(Util::Logger::Level::INFO);
-    
     auto context = Core::Context::GetInstance();
+    Util::Logger::SetLevel(Util::Logger::Level::WARN);
+
     App app;
 
     while (!context->GetExit()) {
