@@ -8,6 +8,7 @@ void Ghost_Clyde::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDi
     (void)pacmanDir;
     (void)blinkyPos;
 
+    //Clyde 演算法是如果玩家距離超過8個單位就以玩家為target計算最短路徑
     const glm::vec2 pos = m_GhostObj->m_Transform.translation;
     glm::vec2 targetPos = {-999.0f, -999.0f};
     if (state == GhostState::CHASE) {

@@ -11,20 +11,33 @@ LevelConfig App::GetLevelConfig(int level){
     LevelConfig config;
     config.mapIndex = (level-1) % 5;
 
-    int difficultyTier = 0;
-    if(level >= 20) {
-        difficultyTier = 2;
-    } else if(level >= 10) {
+    int difficultyTier = level/5;
+    
+    /*
+    if(level >= 5){
         difficultyTier = 1;
     }
-
+    if(level >= 10){
+        difficultyTier = 2;
+    }
+    if(level >= 15){
+        difficultyTier = 3;
+    }
+    if(level >= 20){
+        difficultyTier = 4;
+    }
+    if(level >= 25){
+        difficultyTier = 5;
+    }
+    */
+    
     config.ghostSpeed = 2.0f + (difficultyTier * 0.5f);
     if(config.ghostSpeed >= 4.0f) config.ghostSpeed = 4.0f;
 
-    config.frightenedDuration = 8.0f - (level * 0.25f);
+    config.frightenedDuration = 8.0f - (difficultyTier * 1.0f);
     if(config.frightenedDuration <= 3.0f) config.frightenedDuration = 3.0f;
 
-    float cycle = 10.0f - (level * 0.5f);
+    float cycle = 10.0f - (difficultyTier * 2.0f);
     if(cycle <= 0.0f) cycle = 0.0f;
     config.release = {0.0f, cycle*0.3f, cycle*0.6f, cycle};
 

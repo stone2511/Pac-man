@@ -2,7 +2,11 @@
 
 #include "Core/Context.hpp"
 
+//#include "Util/Logger.hpp"
+
 int main(int, char**) {
+    //Util::Logger::SetLevel(Util::Logger::Level::INFO);
+    
     auto context = Core::Context::GetInstance();
     App app;
 

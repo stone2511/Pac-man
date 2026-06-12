@@ -24,7 +24,8 @@ void GhostManager::Start(const Map& map) {
     clyde->SetHomePosition(map.GridToWorld(11.0f, 9.0f));
     m_Ghosts.push_back(clyde);
 
-    Reset();
+    ResetStateTimers();
+    ResetGhostsForNewLife();
 }
 
 void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanDir, int level) {
@@ -32,6 +33,7 @@ void GhostManager::Update(const Map& map, glm::vec2 pacmanPos, Direction pacmanD
     m_ReleaseTimer += deltaTime;
 
     float scatter_time = 7.0f - level*0.5f;
+    if(scatter_time<=1.0f)  scatter_time =  1.0f;
 
     if (m_CurrentState == GhostState::FRIGHTENED) {
         m_FrightenedTimer -= deltaTime;
@@ -96,25 +98,7 @@ void GhostManager::Reset(LevelConfig config){
     for (auto& ghost : m_Ghosts){
         ghost->SetSpeed(config.ghostSpeed);
     }
-    Reset();
-}
-
-void GhostManager::SetLastEatenGhostVisible(bool visible) {
-    if (m_LastEatenGhostIndex < 0 ||
-        m_LastEatenGhostIndex >= static_cast<int>(m_Ghosts.size())) {
-        return;
-    }
-
-    m_Ghosts[m_LastEatenGhostIndex]->SetVisible(visible);
-}
-
-void GhostManager::PauseAnimations() {
-    for (auto& ghost : m_Ghosts) {
-        ghost->PauseAnimation();
-    }
-}
-
-void GhostManager::Reset(){
+    
     if (m_Ghosts.empty()) {
         return;
     }
@@ -141,6 +125,21 @@ void GhostManager::ResetGhostsForNewLife() {
         m_Ghosts[i]->Reset();
         m_Ghosts[i]->SetIsActive(i==0);
         m_Ghosts[i]->SetHouseState(i == 0 ? HouseState::EXITING : HouseState::IN_HOUSE);
+    }
+}
+
+void GhostManager::SetLastEatenGhostVisible(bool visible) {
+    if (m_LastEatenGhostIndex < 0 || m_LastEatenGhostIndex >= static_cast<int>(m_Ghosts.size()))
+    {
+        return;
+    }
+
+    m_Ghosts[m_LastEatenGhostIndex]->SetVisible(visible);
+}
+
+void GhostManager::PauseAnimations() {
+    for (auto& ghost : m_Ghosts) {
+        ghost->PauseAnimation();
     }
 }
 
